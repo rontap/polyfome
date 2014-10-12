@@ -1,0 +1,62 @@
+  body {
+      font-family: RobotoDraft, sans-serif;
+      color: #303030;
+      margin: 0;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-touch-callout: none;
+      background: #EEE;
+  }
+core-drawer-panel {
+    transition:opacity 1s;
+    opacity:.2;
+}
+  .inway {
+      padding: 20px;
+  }
+  .away {
+      margin: 30px;
+  }
+  .anorex {
+      font-weight: 200;
+  }
+  .block {
+      display: block;
+  }
+  g {
+      color: #666;
+  }
+  .f-16 {
+      font-size: 16px;
+      font-weight: normal;
+  }
+  .userselect {
+   -webkit-user-select:text;
+                user-select:text;
+  }
+    .f-20 {
+      font-size: 20px;
+  }
+  .q {
+      cursor: help;
+      border-bottom: 1px dashed #999;
+  }
+.justify {
+      text-align: justify;
+  }
+  .lh2 {
+      font-size: 16px;
+      line-height: 20px;
+  }
+  bb {
+      font-weight: 500;
+  }
+  .inline-table {
+      display: inline-table;
+  }
+.trans-05 {
+    transition:all .5s;
+}

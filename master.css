@@ -1,0 +1,349 @@
+
+  core-toolbar {
+      background: #5677fc;
+      color: white;
+      -webkit-transition: all .5s;
+	  z-index:99;
+  }
+  paper-icon-button {
+      fill: white;
+  }
+  core-menu {
+      border-right: 1px solid #DDD;
+      background: white;
+      position: fixed;
+      bottom: -11px;
+      left: -11px;
+      width: 233px;
+      top: 53px;
+      padding: 10px;
+      overflow-y: auto;
+  }
+  core-menu core-item {
+      margin: 0 -10px 0 -11px;
+      padding: 5px 5px 5px 30px;
+      -webkit-transition: border .2s, margin-left .2s, padding .2s;
+      cursor: pointer !important;
+      border-right: 0px solid #aaa;
+  }
+  core-menu core-item:hover {
+      border-right: 3px solid #ddd;
+      font-weight: inherit;
+  }
+  core-menu core-item.core-selected {
+      border-right: 3px solid #5677fc;
+      font-weight: inherit;
+  }
+  core-menu core-item.back {
+      background: #ddd;
+      border-left: 5px solid #5677fc;
+  }
+  core-drawer-panel:not([narrow]) #navicon {
+      display: none;
+  }
+  
+  paper-radio-button::content > * {
+  padding:6px;
+  }
+  paper-checkbox::shadow #ink {
+  top: -19px;
+left: -19px;
+width: 56px;
+height: 56px;
+  }
+  
+  .inp-text {
+  width:150px;/*fallback*/
+  }
+  .hideonout {
+      -webkit-transition: all .5s;
+      display: inline-block;
+      max-width: 999px;
+  }
+  .card {
+      padding: 10px;
+      margin: 5px;
+      box-shadow: 0 2px 3px #BBB;
+      background: white;
+      border-radius: 0px 0px 2px 2px;
+  }
+  .collapse {
+      transition: all 6s;
+      max-height: 38px;
+      overflow: hidden;
+  }
+  .collapse b {
+      transition: padding 1s, color .2s, max-height 1s;
+      display: block;
+      background: #444;
+      color: white;
+      margin: -10px;
+      padding: 10px;
+      margin-bottom: 5px;
+  }
+  .collapse.on b {
+      color: transparent;
+      padding: 0px !important;
+      max-height: 10px;
+  }
+  .collapse li {
+      margin-bottom: 5px;
+  }
+  .deep-card-title .deep-card {
+      background: #dEdEdE;
+      box-shadow: 0px 0px 5px #999 inset;
+      padding: 10px;
+      border-radius: 0px 0px 3px 3px;
+  }
+  
+  .tabholder {
+      padding: 20px;
+      margin: 0px;
+      background: white;
+      display: inline-block;
+      -webkit-transition: all 1s;
+  }
+  .tabholder * {
+      -webkit-transition: opacity .5s;
+  }
+  paper-tab::shadow #ink {
+      color: #a6baff;
+  }
+  paper-tabs::shadow #selectionBar {
+      background: #5677fc;
+  }
+  paper-tabs {
+      background: #fefefe;
+      color: #444;
+      border-radius: 2px 2px 0 0;
+  }
+      @media (max-width: 840px) {
+          .hideonout {
+              opacity: 0;
+              max-width: 0px !important;
+          }
+      }
+      @media (max-height: 800px) {
+          core-menu core-item {
+              padding: 3px 5px 3px 30px;
+          }
+      }
+      @media (max-height: 730px) {
+          core-menu core-item {
+              padding: 1px 5px 1px 30px;
+          }
+      }
+  /*menuelements  beállítás*/
+  #menuelements>div {
+      opacity: 0;
+      z-index: -2;
+      display: none;
+      -webkit-transition: all .5s;
+      margin-left: 50px;
+  }
+  #menuelements>div.on {
+      opacity: 1;
+      margin-left: 0;
+  }
+  @-webkit-keyframes loadimg {
+      0% {
+          opacity: 0.2;
+          -webkit-filter: saturate(0%);
+      }
+      30% {
+          -webkit-filter: saturate(0%);
+      }
+      90% {
+          opacity: 1;
+      }
+      100% {
+          -webkit-filter: saturate(100%);
+      }
+  }
+  img.load,.loadimg img,.self-load {
+      opacity: 0;
+      -webkit-animation-name: loadimg;
+      -webkit-animation-duration: 2s;
+      -webkit-animation-delay: .3s;
+      -webkit-animation-fill-mode: forwards;
+      opacity: 1;
+  }
+  .self-load {
+      opacity: 0;
+      -webkit-animation-name: loadimg;
+      -webkit-animation-duration: 2s;
+      -webkit-animation-fill-mode: forwards;
+  }
+  paper-ripple {
+      position: absolute;
+      margin: -10px;
+  }
+  paper-button[raisedButton].colored {
+      background: #fff;
+      color: #444;
+      text-transform: capitalize;
+      margin: 3px;
+      min-width: 262px;
+      text-align: left;
+  }
+  paper-button[raisedButton].colored::shadow #ripple {
+      color: #4e6cef;
+  }
+    paper-button.red {
+        color:#f44;
+    }
+    paper-button.red::shadow #ripple {
+        color:#ff4444;
+    }
+	    paper-button.blue {
+        color:#48f;
+    }
+    paper-button.blue::shadow #ripple {
+        color:#48f;
+    }
+  .grid-container div {
+      border: 1px solid red;
+  }
+ /*chip*/
+  .chip {
+      display: inline-block;
+      position: relative;
+      border-radius: 3px;
+      margin: 4px;
+      overflow: hidden;
+      text-align: start;
+      background-color: #fff;
+      box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+      -webkit-transition: margin .2s;
+  }
+  .chip-top {
+      width: 200px;
+      height: 200px;
+      overflow: hidden;
+  }
+  .chip-top img {
+      width: 200px;
+      height: 200px;
+  }
+  .chip-bottom {
+      width: 180px;
+      padding: 8px;
+      line-height: 1.5;
+      height: 70px;
+  }
+  .chip-bottom span {
+      font-size: 14px;
+  }
+  .chip.long .chip-top img,
+  .chip.long .chip-top {
+      height: 250px;
+  }
+  .mo {
+      margin-left: 0;
+  }
+  .chip.wide .chip-top {
+      width: 380px;
+      height: 50px;
+  }
+  .chip.wide .chip-bottom {
+      height: 130px;
+      width: 360px;
+  }
+  @media (min-width: 1300px) {
+      #menuelements>div {
+          width: 975px;
+          margin: 0 auto !important;
+      }
+  }
+  .item {
+      margin-left: 10px;
+  }
+  .item {
+      position: relative;
+      height: 40px;
+      line-height: 48px;
+      color: #646464;
+      font-size: 0.9em;
+      padding: 0 5px;
+  }
+
+
+/*kombinált lista*/
+
+  .combilist {/*aka fillosztályok*/
+      background: white;
+      border: 1px solid #bbb;
+      border-radius: 3px;
+      padding-left: 10px;
+  }
+  .combilist .item {
+      margin-left: 0px;
+      transition: all .5s;
+  }
+  .combilist .item paper-ripple {
+      margin-top: 5px !important;
+      height: 42px !important;
+      display: none;
+  }
+  .combilist .item:hover paper-ripple {
+      display: inherit;
+  }
+  .combilist .item.selected {
+      border: 1px solid #999;
+      background: white;
+      padding: 20px;
+      margin: 10px -40px 10px -50px;
+      height: 250px;
+      border-radius: 3px;
+  }
+  .combilist .item.selected .mogacs {
+      padding: 15px;
+  }
+
+  .combilist .item.hidden {
+      height: 0;
+      color: white;
+      overflow: hidden;
+  }
+  
+  .fab.red {
+      background-color: #d23f31;
+      -webkit-transition: all .6s;
+      z-index: 99;
+  }
+  .fab {
+      position: fixed;
+      display: inline-block;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      color: #fff;
+      overflow: hidden;
+      transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0.2s;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+      right: 30px;
+      bottom: 30px;
+  }
+  .fab > core-icon {
+      margin: 16px;
+  }
+    html /deep/ core-icon {
+      display: inline-block;
+      vertical-align: middle;
+      background-repeat: no-repeat;
+      fill: white;
+  }
+  html /deep/[fit] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+  }
+  .fab svg {
+  width: 25px;
+height: 25px;
+margin-left: 14px;
+margin-top: 14px;
+}

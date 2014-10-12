@@ -1,0 +1,126 @@
+<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+<div id="ins">
+    <h1 id="fomeins_name"></h1>
+    <i>alpha</i>
+    <br>
+    <b id="nonet"><br><br>No connection<br><span>Tap to retry</span></b>
+    <b id="disabled"><br><br>This site is disabled.<br><span>Sorry.</span></b>
+</div>
+
+<hr id="fomeins_hr">
+<script>
+    if (fome.splashname===undefined) {fome.splashname=fome.title;}
+    
+    fomeins_name.innerHTML=fome.splashname;
+    ins.style.color=fome.primaryColor;
+    fomeins_hr.style.background=fome.primaryColor;
+</script>
+<style>
+    
+    #ins ,
+    #ins b {
+        font-family: 'Montserrat', sans-serif;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0%;
+        top: 20%;
+        vertical-align: middle;
+        color: #9c27b0;
+        overflow: hidden;
+    }
+    #ins h1 {
+        font-size: 9vw;
+        margin-bottom: 0;
+        text-align: center;
+        text-transform: uppercase;
+    }
+    #ins b {
+        top: 40%;
+        text-align: center;
+        -webkit-transition: opacity .6s;
+        color: #444;
+        opacity: 0;
+        font-size: 4vw;
+    }
+    #ins b span {
+        color: #999;
+        -webkit-transition: opacity 1s;
+    }
+    #ins i {
+        margin-left:60%;
+    }
+    #ins  {
+        
+    }
+    #fomeins_hr {
+        -webkit-transition: all .5s;
+        right: 100%;
+        left: 0;
+        border: none;
+        background: #9c27b0;
+        position: fixed;
+        bottom: 0;
+        height: 20px;
+        margin-bottom: 0px;
+    }
+    #fomeins_hr::before {
+        background:none;
+    }
+</style>
+<script>
+    console.log('hi');
+    setTimeout(function () {
+      
+        if (location.hash.search("#stop")=='-1')
+        {doesConnectionExist();}
+        if (location.hash=="#stop-nonet")
+        {   fome.setresolve('nonet')   }
+        if (location.hash=="#stop-disabled")
+        {   fome.setresolve('disabled')   }
+    }, 10);
+
+    function doesConnectionExist() {
+        var xhr = new XMLHttpRequest();
+        var file = "http://elemential.net/aTE_A_JO_SZERVERT_HASZNALOD";
+        var randomNum = Math.round(Math.random() * 100);
+        xhr.open('HEAD', file + "?rand=" + randomNum, false);
+
+        try {
+            xhr.send();
+            if (xhr.status >= 200 && xhr.status < 304) {
+                fome.resolve();
+            } else {
+                nonet();
+            }
+        } catch (e) {
+            nonet();
+        }
+    }
+setTimeout(function(){
+      fomeins_hr.style.right = "0%";
+},500)
+    fome.setresolve=function(call) {
+        fome.unresolve();
+        setTimeout(function () {
+            fomeins_hr.style.background = "#f44";
+            fomeins_hr.style.height = "12px";
+            window[call].style.opacity = 1;
+        }, 500);
+        if (call=='disabled') 
+        {
+            document.onkeydown=deletedoc;
+            document.oncontextmenu=deletedocmain;
+            fome.resolve="";
+        }
+    }
+function deletedoc(e){if (e.ctrlKey) {
+    deletedocmain();
+}}
+function deletedocmain() {
+    document.body.innerHTML="<h1>Sorry, this site is disabled.</h1>";
+    console.clear()
+    console.log('This site is seriously disabled.'); 
+    
+}
+</script>
