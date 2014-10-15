@@ -347,3 +347,28 @@ height: 25px;
 margin-left: 14px;
 margin-top: 14px;
 }
+.submenu core-item {
+    transition:all .4s;
+     margin-right: 10px !important;
+}
+.submenu  {
+    display: inline-block;
+    transition:all .4s;
+    max-height:0px;
+    overflow: hidden;
+    width: calc(100% + 10px);
+    margin-left:11px;
+    padding-left:0px;
+    border-right:4px solid #999 !important;
+}
+.submenu.open  {
+    max-height:250px;
+    padding-left:10px;
+    /*overflow-y: auto;*/
+}
+.submenu.open core-item {
+     transition:all .4s;
+    margin-right: 20px !important;
+     border-right:4px solid #999 !important;
+    
+}

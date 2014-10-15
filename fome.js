@@ -36,11 +36,13 @@ function wayfunction(i) {
 }
 
 function goto(site) {
+    removeopenmenu();
     switch (site) {
 
         default: gotoinsite(site);
     }
     paperRipple();
+     
 }
 whereAreWe = 'home';
 
@@ -105,6 +107,16 @@ function outcollapse(id) {
     $('#' + id).css('max-height', '2000px');
     $('#' + id).addClass('on');
 }
+
+function removeopenmenu() {
+    $('.submenu').removeClass('open');
+}
+function swsubmenu(call) {
+    if ($($('.submenu')[call]).hasClass('open')) { $($('.submenu')[call]).removeClass('open');  }
+    else { $($('.submenu')[call]).addClass('open'); }
+}
+
+
 
 fome.page = {
 	'reload' : function(site) {
