@@ -19,21 +19,8 @@ document.addEventListener('polymer-ready', function () {
 
 colors = ['#e51c23', '#9e9e9e', '#673ab7', '#3f51b5', '#5677fc', '#03a9f4', '#00bcd4', '#009688', '#259b24', '#607d8b', '#ff9800', '#ffeb3b', '#795548'];
 
-function wayout() {
-    for (i = document.getElementsByTagName('core-menu')[0].getElementsByTagName("core-item").length; i >= 0; i--) {
 
-        wayfunction(i);
 
-    }
-}
-
-function wayfunction(i) {
-    setTimeout(function () {
-        console.log(i);
-        document.getElementsByTagName('core-menu')[0].getElementsByTagName("core-item")[i].style.marginLeft = "-256px";
-        document.getElementsByTagName('core-menu')[0].getElementsByTagName("core-item")[i].style.border = "none";
-    }, (i * 2) * 10);
-}
 
 function goto(site) {
     removeopenmenu();
@@ -108,15 +95,6 @@ function outcollapse(id) {
     $('#' + id).addClass('on');
 }
 
-function removeopenmenu() {
-    $('.submenu').removeClass('open');
-}
-function swsubmenu(call) {
-    if ($($('.submenu')[call]).hasClass('open')) { $($('.submenu')[call]).removeClass('open');  }
-    else { $($('.submenu')[call]).addClass('open'); }
-}
-
-
 
 fome.page = {
 	'reload' : function(site) {
@@ -129,7 +107,7 @@ fome.page = {
 
 //endfunctions
 
-goto('homex');
+gotoinsite('homex');
 
 console.log(location);
 $('fome-element').load("http://elemential.net/polyfome/main.html");//betölti az oldalsávot

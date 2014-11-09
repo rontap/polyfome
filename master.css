@@ -356,10 +356,26 @@ margin-top: 14px;
     transition:all .4s;
     max-height:0px;
     overflow: hidden;
-    width: calc(100% + 10px);
+    width: calc(100% - 11px);
     margin-left:11px;
     padding-left:0px;
-    border-right:4px solid #999 !important;
+    
+   
+}
+.mainmenu::after {
+  background-image: url("plus.gif");
+background-size: contain;
+width: 15px;
+content: "";
+height: 15px;
+display: block;
+z-index: 999;
+overflow: visible;
+    float:right;
+    margin-left: 70%;
+}
+.mainmenu.core-selected::after {
+    background-image: url("minus.gif");
 }
 .submenu.open  {
     max-height:250px;
@@ -368,7 +384,7 @@ margin-top: 14px;
 }
 .submenu.open core-item {
      transition:all .4s;
-    margin-right: 20px !important;
+    margin-right: 0px !important;
      border-right:4px solid #999 !important;
     
 }
