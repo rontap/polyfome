@@ -1,3 +1,32 @@
+
+if (fome.theme==1)
+{
+    //1 open submenu
+function removeopenmenu() {
+    $('.submenu').removeClass('open');
+}
+function swsubmenu(call) {
+    if ($($('.submenu')[call]).hasClass('open')) { $($('.submenu')[call]).removeClass('open');  }
+    else { $($('.submenu')[call]).addClass('open'); }
+}
+
+
+function wayout() {
+    for (i = document.getElementsByTagName('core-menu')[0].getElementsByTagName("core-item").length; i >= 0; i--) {
+
+        wayfunction(i);
+
+    }
+}
+
+function wayfunction(i) {
+    setTimeout(function () {
+        console.log(i);
+        document.getElementsByTagName('core-menu')[0].getElementsByTagName("core-item")[i].style.marginLeft = "-256px";
+        document.getElementsByTagName('core-menu')[0].getElementsByTagName("core-item")[i].style.border = "none";
+    }, (i * 2) * 10);
+}
+
 coreit="";
 submenucount=0;
 for (i=0;i<fome.link.length;i++)
@@ -29,3 +58,20 @@ $('html > head').append(
 	)
 },190)//hakész
 
+
+
+}//fulif
+if (fome.theme==2) {
+	coreit="";
+	for (i=0;i<fome.link.length;i++)
+	{
+	 coreit+= '<a href="#">'+fome.link[i]+'</a>'
+	}
+	fill_t.innerHTML=coreit;
+}
+
+if (fome.themeflags.search('-nomenu')>=0) {
+	$("core-menu").css("display","none");
+	$("core-menu").css("z-index","-5");
+	$("#navicon").css("opacity","0");
+}

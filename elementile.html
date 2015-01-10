@@ -1,0 +1,102 @@
+<style>
+
+core-drawer-panel {
+   position: fixed;
+    transition:all .2s;
+}
+    core-header-panel /deep/ core-menu
+    {
+         transition:all .2s;
+        margin-top:0px;
+    }
+    .menu core-header-panel /deep/ core-menu, .menu core-drawer-panel
+    {   
+    margin-top:120px; 
+    
+    }
+     
+    .lapis {
+        z-index: 99;
+    }
+    #emenu {
+        position: fixed;
+        height: 120px;
+        top:-120px;     
+        transition: all .2s;
+        left:0; right:0;
+        z-index: 0;
+    }
+    .menu #emenu {
+        top:0px;
+    }
+    #emenu_color {
+        
+        background: rgb(156, 39, 176);
+        width: 100%;
+        position: fixed;
+        z-index: -1;
+        left: 0;
+        right: 0;
+        height: 120px;
+
+    }
+    .themeMoreThan0 #emenu_color {
+         -webkit-filter: brightness(0.85);
+    }
+    #elementile_menu {      
+        float:right;
+        margin:0px 4px 5px 0px;
+        position: fixed;
+        right:5px;
+        top:5px;
+        transition:all .2s;
+    }
+    .menu #elementile_menu  {
+        top:125px;
+    }
+    #elementile_menu  /deep/ core-icon {
+        fill: #444;
+    }
+   
+</style>
+ 
+<Script>
+    //http://elemential.net/polyfome/
+$('fome-menu').load('http://elemential.net/polyfome/menu.html');
+
+console.log('Elementile Loaded',$('#emenuholder'));
+setTimeout(function(){
+    $('#emenu_color').css('background',fome.primaryColor); 
+    console.log(fome);
+    if (fome.theme>0)
+    {
+     $('#logoholder').append('<paper-icon-button icon="apps" onclick="fome.swmenu();"></paper-icon-button>');
+    $('body').addClass('themeMoreThan0');
+    }
+    else {
+        $('body').prepend('<paper-icon-button icon="apps" onclick="fome.swmenu();" class="alt" id="elementile_menu"></paper-icon-button>');
+    }
+},1000)
+       
+fome.swmenu = function() {
+    $('body').toggleClass('menu');
+}
+var map = []; // Or you could call it "key"
+ onkeydown = function(e){
+    map[e.keyCode] = e.type == 'keydown';
+   if( map[18] && map[81] )
+   {
+        $('body').toggleClass('menu');  
+       map=[];
+   }
+     console.log(map);
+    
+}
+ 
+ //lazy code copy.. have to do fome_min.js
+fome.jumpTo = function(call,sec) {
+    $('body').removeClass("menu");
+    $('core-toolbar').css('background',sec);
+    window.location=call;
+}
+</Script>

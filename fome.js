@@ -1,6 +1,7 @@
 /* Polyfome by Elemential.
  * Based on Polymer By Google
  * version 0.0 - 2014/09/11
+ * version 1.0 - 2014/12/20
  */
 
 if (fome.location===undefined) { fome.location=''; }
@@ -8,7 +9,9 @@ if (fome.location===undefined) { fome.location=''; }
 
 
 mostev = new Date().getFullYear(); //mostév
-
+/*
+if (fome.theme!=0)
+{
 document.addEventListener('polymer-ready', function () {
     var navicon = document.getElementById('navicon');
     var drawerPanel = document.getElementById('drawerPanel');
@@ -16,24 +19,12 @@ document.addEventListener('polymer-ready', function () {
         drawerPanel.togglePanel();
     });
 });
+}*/
 
 colors = ['#e51c23', '#9e9e9e', '#673ab7', '#3f51b5', '#5677fc', '#03a9f4', '#00bcd4', '#009688', '#259b24', '#607d8b', '#ff9800', '#ffeb3b', '#795548'];
+fome.var={};
 
-function wayout() {
-    for (i = document.getElementsByTagName('core-menu')[0].getElementsByTagName("core-item").length; i >= 0; i--) {
 
-        wayfunction(i);
-
-    }
-}
-
-function wayfunction(i) {
-    setTimeout(function () {
-        console.log(i);
-        document.getElementsByTagName('core-menu')[0].getElementsByTagName("core-item")[i].style.marginLeft = "-256px";
-        document.getElementsByTagName('core-menu')[0].getElementsByTagName("core-item")[i].style.border = "none";
-    }, (i * 2) * 10);
-}
 
 function goto(site) {
     removeopenmenu();
@@ -108,37 +99,55 @@ function outcollapse(id) {
     $('#' + id).addClass('on');
 }
 
-function removeopenmenu() {
-    $('.submenu').removeClass('open');
-}
-function swsubmenu(call) {
-    if ($($('.submenu')[call]).hasClass('open')) { $($('.submenu')[call]).removeClass('open');  }
-    else { $($('.submenu')[call]).addClass('open'); }
-}
-
-
 
 fome.page = {
 	'reload' : function(site) {
 		window[site].innerHTML="";
 		$('#'+site).load(fome.location+site+".html");
 		console.log(site+' reloaded');
-	}
+	},
+    'open' : function(site,name,hash) {
+        window.open(site +'#'+hash,name,"width=980 height=650");
+    }
 };
-
-
+fome.tryit = function(hash) {
+    window.open('tryit.html#'+hash,'Rontap TryIt',"width=980 height=650");
+}
+fome.devmode = function(call) {
+    if (call) {fome.devmodeActivate();}
+    else {fome.devmodeDeActivate();}
+}
+fome.devmodeActivate = function() {
+    
+}
 //endfunctions
+fome.jumpTo = function(call,sec) {
+    $('body').removeClass("menu");
+    $('core-toolbar').css('background',sec);
+    window.location=call;
+}
 
-goto('homex');
-
+gotoinsite('homex');
+if (fome.loc===undefined) {
+	fome.loc='';
+}
 console.log(location);
+if (fome.theme==1)
+{
 $('fome-element').load("http://elemential.net/polyfome/main.html");//betölti az oldalsávot
+}
+else if (fome.theme==2) {
+$('fome-element').load(fome.loc+"scheme.html");//második
+}
 
 incllist="";
 elementsload=['navname','extratitle','title','logos']
+elementsload2=['title'];
+
 setTimeout(function () {
     switchtab('io', 0, 3);
     
+    if (fome.theme==1) {  
     for (i=0;i<elementsload.length;i++)
     {
     $('fome-element')[0].innerHTML=$('fome-element')[0].innerHTML.replace('%'+elementsload[i]+'%',fome[elementsload[i]])
@@ -146,10 +155,37 @@ setTimeout(function () {
     for (i=0;i<fome.incl.length;i++)
     {
         incllist+='<div id="'+fome.incl[i]+'"></div>';
-    }
+    }	
      $('fome-element')[0].innerHTML=$('fome-element')[0].innerHTML.replace('%includes%',incllist);
     
+    }//1
+    else if (fome.theme==2) {
+	    for (i=0;i<elementsload.length;i++)
+	    {
+	    $('fome-element')[0].innerHTML=$('fome-element')[0].innerHTML.replace('%'+elementsload[i]+'%',fome[elementsload[i]])
+	    }
+    }
+	
+        
     for (i=0;i<fome.incl.length;i++) {//enter eventstuff
         $("#"+fome.incl[i]).load(fome.location+fome.incl[i]+'.html');
     }
 }, 1000);
+
+fome.var.notifycount=0;
+fome.notify = function(name,duration,onclick,helptext,helptext_color,helptext_onclick,spec_class) {
+        
+	a='<paper-toast text="'+name+'" onclick="'+onclick+'"id="fome_notification'+(fome.var.notifycount)+'" class="'+spec_class+'">';
+	if (helptext!==undefined){a+='<div style="color:'+helptext_color+';" onclick="'+helptext_onclick+'">'+helptext+'</div>';console.log('jani');}
+	a+='</paper-toast>';
+	$('fome-element').append(a);
+	setTimeout(function(){
+	if (duration===undefined) { duration=3000; }
+	window['fome_notification'+fome.var.notifycount].duration=duration;
+	window['fome_notification'+fome.var.notifycount].toggle();
+	
+	fome.var.notifycount++;
+	},100);
+}
+
+console.log('POLYFOME loaded');

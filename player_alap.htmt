@@ -1,0 +1,189 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!-- Polyfome Music Player 1.0
+     Made by rontap for Elemential
+     Licenced under CC 4.0 BY      http://creativecommons.org/licenses/by/4.0/
+-->
+
+<hr id="music_list">
+<hr id="music_active">
+<script src="http://elemential.net/data/csv.js"></script>
+<br><br>
+<button onclick="play.chg();">stop/start</button><br><br>
+<button onclick="play.history.next();">next</button>
+<button onclick="play.history.prev();">prev</button><br><br>
+
+<span id="play_cur"></span>/<span id="play_dur"></span><br>
+<input type="range" min="0" max="100" onchange="myaudio.volume=this.value/100" value="100" id="sound"> volme
+<button onclick="play.mute();">mute</button><br><br>
+<input id="loadh" placeholder="url">
+    <button onclick="play.load(loadh.value,true);">load</button><br>
+
+
+<div><b>history</b>
+<span id="play_history"></span>
+</div>
+
+<br><hr><br>
+   <input id="loadls"><button onclick="play.offline.save(loadls.value)">saveToLocal</button><button onclick="play.offline.open(loadls.value)">openFromLocal</button>
+
+<div id="posfix">Polyfome music player. Created by Elemential 2014-2015</div>
+
+
+<style>
+#music_active,#music_list {
+    border:none;
+    height: 10px;
+    position: fixed;
+    left:0;
+    width:0;
+    background:#48f;
+    transition:all .2s;
+    cursor: pointer;
+}
+#music_list {
+    width:100%;
+    background:#ddd;
+}
+    #posfix {
+        position: fixed;
+        bottom: 5px;
+        color:#666;
+        font-family: monospace;
+        font-size: 12px;
+    }
+    div.list.on {
+        font-weight: bold;
+    }
+</style>
+
+<script>
+
+    
+    
+wd=window.innerWidth;
+play =  {};
+play.history=function (call) {
+    play.history.store[play.history.store.length]=call;
+};//function for storing music
+play.history.store=[];    
+play.offline={};
+  
+    
+play.isStopped=true;
+play.chg = function() {  
+    if (play.isStopped==true)
+    {
+    play.dur=myaudio.duration;
+    play_dur.innerHTML=Math.ceil(play.dur);
+    myaudio.play();
+    play.upd(); 
+    play.isStopped=false;
+    }
+    else {
+    myaudio.pause();   
+    play.isStopped=true;
+    }
+    
+}
+    
+play.upd = function() {
+    play.cur=myaudio.currentTime;
+    $('#music_active').css('width',(play.cur/play.dur*100) + "%");
+    play_cur.innerHTML=Math.ceil(play.cur);
+     play.dur=myaudio.duration;
+        play_dur.innerHTML=Math.ceil(play.dur);
+    if (play.cur==play.dur)
+    {
+        play.history.next();
+        myaudio.play();
+    }
+    setTimeout(function(){
+        play.upd();
+    },200);
+}
+play.isMuted=false;
+play.savedVolume=0;
+play.mute = function() {
+    if (play.isMuted) 
+    {
+        myaudio.volume=play.savedVolume;
+        play.isMuted=false;
+    }
+    else {
+        play.savedVolume=myaudio.volume;
+        myaudio.volume=0;
+        play.isMuted=true;
+    }
+    
+}  
+play.load = function(call,m) {//számok betöltésekor fut le
+   play.isStopped=true;
+   if (m) myaudio.pause();
+   myaudio = new Audio(call);   
+   myaudio.currentTime=0;
+   console.log('[LOAD]'+call);
+   play.history(call);//creating history
+   play_history.innerHTML+="<div class='list'>"+call+"</div>"    ;   
+
+}
+
+play.history.load = function(call)//szám váltásakor ez fut le, frissiti
+{
+   
+   myaudio.pause();
+   myaudio = new Audio(call);   
+   myaudio.currentTime=0;
+   console.log('[LOAD]'+call);
+   $('div.list').removeClass('on');
+   $($('div.list')[$('div.list').length-play.history.state]).addClass('on');    
+   myaudio.play();
+       
+  myaudio.volume=sound.value/100;
+    
+   
+}
+
+play.history.state=1;//hol van a normáloz képest
+    
+play.history.prev = function() {
+    play.history.state--;
+    play.history.load(play.history.store[play.history.store.length-play.history.state],true);
+    
+}    
+play.history.next = function() {
+    play.history.state++;
+    play.history.load(play.history.store[play.history.store.length-play.history.state],true);
+}   
+
+
+//offline loading
+play.offline.open = function(name) {
+    play.history.state=1;
+    qstore= $.csv.toArray(localStorage['PFMP'+name]);
+    play_history.innerHTML="";
+    for (i=0;i<qstore.length;i++)
+    {
+        play.load(qstore[i]);
+    }
+}
+play.offline.save = function(name) {
+    (localStorage['PFMP'+name])=play.history.store;
+    console.log('[SAVE] as '+name);
+}
+
+//curmos
+music_list.onclick=function(e){
+var X = e.pageX - this.offsetLeft ;
+myaudio.currentTime=((X/$('#music_list').width())*play.dur);
+}
+music_active.onclick=function(e){
+var X = e.pageX - music_list.offsetLeft ;
+myaudio.currentTime=((X/$('#music_list').width())*play.dur);
+}
+
+
+play.load('http://elemential.net/rontap/rad.mp3',false);
+play.load('http://elemential.net/rontap/bbc.mp3',false);
+play.load('http://elemential.net/rontap/sec.mp3',false);
+play.history.state=0;
+</script>

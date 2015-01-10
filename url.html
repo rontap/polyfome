@@ -1,0 +1,217 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<!-- Elemential url shortner 1.0
+     Made by rontap and deesnow
+     Licenced under CC 4.0 BY      http://creativecommons.org/licenses/by/4.0/
+-->
+
+<fome-menu></fome-menu>
+<h1>Elemential URL shortener</h1>
+<container id="superholder">
+<div   id="links">
+	<div id="classy" class="away card">
+        <paper-input label="long URL" floatinglabel id="inca"></paper-input>
+       <g> Only elemential.net links are allowed.<br>Howewer you can use our API to implement<br> this tool in your site.</g>
+    <paper-fab icon="link" onclick="create();" id=""></paper-fab>
+   </div>
+</div>
+
+<div  class="away card" id="created">
+   
+   <div id="back"></div>
+</div>
+
+</container>
+<paper-spinner  role="progressbar" aria-label="loading" id="bufferr" active class="active" ></paper-spinner>
+
+<div id="posfix">URL shortner. Created by  Elemential 2014-2015</div>
+
+<script>
+    fome = { primaryColor : '#666',
+            theme : 0 };
+function create() {
+    $('#bufferr').addClass('on');
+    $('#superholder').addClass('is');
+    
+    
+    
+    data=inca.value.replace('elemential.net','');
+    $.ajax({
+    type: "POST",
+    url: "http://elemential.net/shorten.php",
+    data: 'link='+data,
+    cache: false,
+    success: function(result){
+        aq=JSON.parse(result)
+    console.log(aq);
+        back.innerHTML='<a href="'+aq.shortenedLink+'">'+aq.short+"</a>";
+        $('#bufferr').removeClass('on');
+        $('#back').addClass('is');
+    }
+    });
+    
+}
+console.log('as');
+</script>
+<style>
+   #back a {
+      color: #ddd;
+font-weight: bold;
+display: block;
+text-align: center;
+font-size: 28px;
+margin-top: 55px;
+text-decoration: none;
+       transition: all .4s;
+        opacity: 0;
+   }
+    #back.is a{ 
+        opacity: 1;
+    }
+    h1 {
+        text-align: center;
+        color:#222;
+        font-weight: 200;
+        margin-top:150px;
+        margin-top: 70px;
+margin-bottom: -22px;
+    }
+    g {
+        color:#666;
+        font-size: 14px;
+         display: inline-block;
+    }
+    paper-input {
+        margin-top:5px;
+    }
+#created {
+transition:all .4s;
+opacity:0;
+
+}
+.is #created {
+opacity:1;
+
+margin-left: 50%;
+width: 350px;
+background: #224480;
+box-shadow: 1px 0px 3px #443 inset;
+border-radius: 0;
+
+}
+#links {
+margin:100px auto;
+margin-left: calc(50% - 190px);
+transition:all .4s;
+}
+.is #links {
+margin-left:calc(50% - 370px);
+}
+#classy {
+width:350px;
+height:150px;
+}
+paper-fab {
+margin-left: 328px;
+margin-top: -78px;
+    transition:all .2s;
+}
+    paper-spinner {
+        position: absolute;
+       
+        z-index: 1;
+        margin-left: calc(50% - 29px);
+        width: 60px;
+        height: 60px;
+        transition:.4s;
+         opacity: 0;
+        margin-top: -214px;
+    }
+    paper-spinner.on {
+        opacity: 1;
+    }
+    paper-spinner::shadow .circle {
+    border-color: #48f;
+  }
+    paper-fab {
+        z-index: 99;
+    }
+    paper-fab /deep/ #shadow-container {
+        transition:all .2s;
+    }
+    paper-fab.buffering /deep/ #shadow-container {
+        opacity: 0;
+    }
+    .float {
+        float:right;
+    }
+    #posfix {
+        position: absolute;
+        bottom: 5px;
+        color:#666;
+        font-family: monospace;
+        font-size: 12px;
+        margin:10px;
+        text-align: center;
+        right:0;
+        left:0;
+    }
+    
+        #links {       
+        -webkit-animation:showslide 1.5s;     
+    }
+        @-webkit-keyframes showslide {
+        0% {opacity: 0;margin-top:150px;}
+        40% {opacity:0;margin-top:130px;}
+        100% {opacity:1;margin-top:100px;}
+    }
+
+    
+    @media screen and (min-width:800px) {
+        #created {
+            position: absolute;
+            margin-top: -270px;
+            height: 150px;
+            width:20px;
+            margin-left: calc(50% + 190px);
+        }
+    }
+    
+     @media screen and (max-width:800px) {       
+        paper-fab {
+        margin-left: 143px;
+        margin-top: 7px;
+        }
+         .is #links {
+             margin-left: calc(50% - 190px);
+             padding: 0px;
+         }     
+         .is #created {            
+             margin-top: -99px;
+           margin-left: calc(50% - 185px);
+             height: 150px;             
+         }
+          #created {               
+             height:0px;
+             margin-top:-99px;
+             width:170px;
+         }
+    }
+    @media screen and (max-width:420px) {  
+     #links, #classy, #created {
+         margin-left:0px !important;
+            width:100% !important;
+        } 
+        paper-fab {
+            margin-left:calc(50% - 51px);
+        }
+    }
+</style>
+<script>
+
+</script>
+
+
+      
+<link rel="import" href="include_minimalist.html">
+  <link rel="import" href="elementile.html">

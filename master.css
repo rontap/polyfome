@@ -19,10 +19,11 @@
       padding: 10px;
       overflow-y: auto;
   }
+
   core-menu core-item {
       margin: 0 -10px 0 -11px;
       padding: 5px 5px 5px 30px;
-      -webkit-transition: border .2s, margin-left .2s, padding .2s;
+      -webkit-transition: border .2s, margin-left .2s, padding .2s,color .2s;
       cursor: pointer !important;
       border-right: 0px solid #aaa;
   }
@@ -40,6 +41,10 @@
   }
   core-drawer-panel:not([narrow]) #navicon {
       display: none;
+  }
+    core-menu core-item[disabled], core-menu core-item[disabled].core-selected {
+  color:#999;
+  border-right: 0px solid #ddd !important;
   }
   
   paper-radio-button::content > * {
@@ -307,9 +312,10 @@ height: 56px;
   }
   
   .fab.red {
-      background-color: #d23f31;
-      -webkit-transition: all .6s;
-      z-index: 99;
+      background-color: #d23f31;    
+  }
+  .fab.blue {
+      background-color: #48f;    
   }
   .fab {
       position: fixed;
@@ -324,6 +330,9 @@ height: 56px;
       box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
       right: 30px;
       bottom: 30px;
+      
+      -webkit-transition: all .6s;
+      z-index: 99;
   }
   .fab > core-icon {
       margin: 16px;
@@ -344,8 +353,7 @@ height: 56px;
   .fab svg {
   width: 25px;
 height: 25px;
-margin-left: 14px;
-margin-top: 14px;
+
 }
 .submenu core-item {
     transition:all .4s;
@@ -356,10 +364,26 @@ margin-top: 14px;
     transition:all .4s;
     max-height:0px;
     overflow: hidden;
-    width: calc(100% + 10px);
+    width: calc(100% - 11px);
     margin-left:11px;
     padding-left:0px;
-    border-right:4px solid #999 !important;
+    
+   
+}
+.mainmenu::after {
+  background-image: url("plus.gif");
+background-size: contain;
+width: 15px;
+content: "";
+height: 15px;
+display: block;
+z-index: 999;
+overflow: visible;
+    float:right;
+    margin-left: 70%;
+}
+.mainmenu.core-selected::after {
+    background-image: url("minus.gif");
 }
 .submenu.open  {
     max-height:250px;
@@ -368,7 +392,14 @@ margin-top: 14px;
 }
 .submenu.open core-item {
      transition:all .4s;
-    margin-right: 20px !important;
+    margin-right: 0px !important;
      border-right:4px solid #999 !important;
     
+}
+
+    .button.raised {
+transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+transition-delay: 0.2s;
+box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+background:white;
 }

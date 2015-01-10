@@ -1,0 +1,180 @@
+
+        <style>
+            @import url(http://fonts.googleapis.com/css?family=Roboto+Slab);
+            
+        container {
+            width:100%;
+            display: block;
+            
+            margin-top:250px;
+            background:#f1f1f1;
+            z-index: 10;
+            box-shadow: 0px 0px 3px #999;
+        }
+            #flatline div {
+                text-align: center;
+                font-size: 10vw;
+                display:table-cell;
+                vertical-align:middle;
+                text-transform: uppercase;
+                font-family: 'Roboto Slab', serif;
+ 		text-shadow: 0px 0px 5px #666;
+                /*transition:all .1s;*/
+            }
+           #flatline {
+               z-index: -1;
+               position: fixed;
+               left: 0;
+               top:0;
+               right: 0;
+               height:250px;
+               background-image:url('http://elemential.net/rontap/statisztika/bg.jpg');
+               background-size: 100%;
+               
+           } 
+            nav {
+                background:#f1f1f1;
+                height:41px;
+                position: fixed;
+                width: 100%;
+                top:-42px;
+                opacity:0.95;
+                transition:all .5s;
+                 z-index: 999;
+                border-bottom:1px solid #ddd;
+            }
+            nav a {
+                text-decoration: none;
+                padding: 10px;
+                display: inline-block;
+                margin:0px 0px;
+                border-bottom:0px solid transparent;
+                color:#222;   
+                transition: all .2s;
+                height:19px;
+                z-index: 1000;
+            }
+            nav a.sel {
+             border-bottom:3px solid #48f;   
+            }
+            #containerx {
+            margin-left: auto;
+                margin-right: auto;
+                padding-top:5px;
+                max-width:1000px;
+            }
+            #containerx h1 {
+                font-size: 4vw;
+                margin:10px;
+                padding-bottom:250px;
+            }
+			#gototops {
+				float: right;
+				margin-top: 6px;
+				margin-right: 10px;
+				transform: rotate(90deg);
+				cursor:pointer;
+				opacity:0.7;
+				transition:all .4s ;
+			}
+			#gototops {
+			opacity:1;
+			}
+        </style> 
+
+        <nav>
+            <span id="fill_t">
+            	%linkspace%
+            </span>
+	    <img src="http://elemential.net/rontap/back4.png" onclick="scrollToTop();" id="gototops">
+        </nav>
+        <div id="flatline">
+            <div>%title%</div>
+        </div>
+        <container>
+            <div id="containerx">
+           
+                </div>
+        </container>
+         
+       
+        <script>
+        setTimeout(function(){
+$.fn.scrollTo = function( target, options, callback ){
+  if(typeof options == 'function' && arguments.length == 2){ callback = options; options = target; }
+  var settings = $.extend({
+    scrollTarget  : target,
+    offsetTop     : 50,
+    duration      : 500,
+    easing        : 'swing'
+  }, options);
+  return this.each(function(){
+    var scrollPane = $(this);
+    var scrollTarget = (typeof settings.scrollTarget == "number") ? settings.scrollTarget : $(settings.scrollTarget);
+    var scrollY = (typeof scrollTarget == "number") ? scrollTarget : scrollTarget.offset().top + scrollPane.scrollTop() - parseInt(settings.offsetTop);
+    scrollPane.animate({scrollTop : scrollY }, parseInt(settings.duration), settings.easing, function(){
+      if (typeof callback == 'function') { callback.call(this); }
+    });
+  });
+}
+            
+            awratio=$('#flatline').width()/16*7;
+            if (awratio>window.innerHeight)
+            {
+                awratio=window.innerHeight-35;
+            }
+         $('#flatline').height( awratio );
+         $('#flatline div').height( awratio );
+         $('#flatline div').width( window.innerWidth );
+         $('container').css('margin-top', awratio); 
+            window.onscroll = function() {
+               
+                
+                if ( window.scrollY+21>awratio ) {
+                    $('nav').css('top',0);
+                    
+                    for (ij=0;ij<linkanchors.length;ij++) {
+                        if (window.scrollY+60<=linkanchors[ij]) {
+                            $('nav a').removeClass('sel');
+                            $($('nav a')[ij-1]).addClass('sel');
+                            ij=Infinity;
+                        }
+                    }
+                }
+                else {
+                    $('nav').css('top','-42px');
+                    
+                    $('#flatline').css('background-position','0px -'+window.scrollY/2 ) ;
+                    $('#flatline div').css('height',awratio-window.scrollY/1.8 ) ;
+                    $('#flatline div').css('opacity',(1-scrollY*1.2/awratio) ) ;
+                }
+                
+            }
+            
+            $('nav a').click(function(){
+                event.preventDefault();
+                $('nav a').removeClass('sel');
+                $(this).addClass('sel');
+                
+                $('html, body').animate({
+                    scrollTop: $($('h1')[$.makeArray($('nav a')).indexOf($('nav a.sel')[0])]).offset().top-50
+                }, 500);
+               
+                
+                });
+            linkanchors=[];
+            for (i=0;i<$('container h1').length;i++) {
+                linkanchors[linkanchors.length]=$($('container h1')[i]).offset().top;
+            }
+            function scrollToTop() {
+						var body = $("html, body");
+			body.animate({scrollTop:0}, '500', 'swing', function() { 
+			   
+			});
+            }
+           
+           
+           },1500);//STO
+           console.log('hello');
+        </script>
+  <link rel="import" href="../../polyfome/include.html">

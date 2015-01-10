@@ -1,0 +1,424 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<!-- Polyfome Music Player 1.0
+     Made by rontap for Elemential
+     Licenced under CC 4.0 BY      http://creativecommons.org/licenses/by/4.0/
+-->
+<fome-menu></fome-menu>
+<div  class="away card playerbox showcase" >
+ <paper-slider pin="" value="50" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="38" id="superslider"></paper-slider>
+
+   <div id="cur_play">lets play music!</div>
+    <span id="ctrlbtns">
+       <paper-icon-button onclick="play.history.prev();" icon="av:fast-rewind"></paper-icon-button>
+    <paper-fab icon="av:play-arrow" onclick="play.chg();" id="music_fab"></paper-fab>
+       <paper-icon-button onclick="play.history.next();" icon="av:fast-forward"></paper-icon-button>
+    </span>
+
+    <paper-icon-button onclick="play.mute();" icon="av:volume-off" id="soundindicator"></paper-icon-button>
+    <paper-slider type="range" min="0" max="100" onmouseup="play.sound(this.immediateValue);" value="100" id="sound"></paper-slider>
+    <span class="float">
+        <paper-icon-button onclick="play.ui.playlist();" icon="view-list"></paper-icon-button>
+        <paper-icon-button onclick="play.loop();" icon="av:loop" id="loopindicator"></paper-icon-button>
+        <paper-icon-button onclick="play.download();" icon="archive" id="loopindicator"></paper-icon-button>
+    </span>
+</div>
+<div id="playlist" class="card away">
+<div id="playlist_content">
+    </div>
+    <div id="addnew">
+    <paper-input placeholder="URL" id="loadh"></paper-input><paper-button onclick="play.load(loadh.value,true);loadh.value=''">add</paper-button>
+    </div>
+</div> 
+<paper-spinner active="" role="progressbar" aria-label="loading" id="bufferr"></paper-spinner>
+
+<!--
+
+<br><br>
+
+
+<span id="play_cur"></span>/<span id="play_dur"></span><br>
+
+
+
+<br><hr><br>
+   <input id="loadls"><button onclick="play.offline.save(loadls.value)">saveToLocal</button><button onclick="play.offline.open(loadls.value)">openFromLocal</button>
+-->
+
+<div id="posfix">Elemential Music Player. Created by Elemential 2014-2015</div>
+
+
+<style>
+    paper-spinner {
+        position: absolute;
+        margin-top: -173px;
+        z-index: 1;
+        margin-left: calc(50% - 30px);
+        width: 60px;
+        height: 60px;
+        transition:.4s;
+         opacity: 0;
+    }
+    paper-spinner.on {
+        opacity: 1;
+    }
+    paper-spinner::shadow .circle {
+    border-color: #48f;
+  }
+    paper-fab {
+        z-index: 99;
+    }
+    paper-fab /deep/ #shadow-container {
+        transition:all .2s;
+    }
+    paper-fab.buffering /deep/ #shadow-container {
+        opacity: 0;
+    }
+    .playerbox.showcase {
+        transition:all .2s;
+        -webkit-animation:showslide 1.5s;
+     
+    }
+    @-webkit-keyframes showslide {
+        0% {opacity: 0;margin-top:70px;}
+        40% {opacity:0;margin-top:70px;}
+        100% {opacity:1;margin-top:50px;}
+    }
+    #cur_play {
+        color: #444;
+        font-size: 16px;
+        padding: 5px 20px;
+        white-space: normal;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    /*hm...*/
+    .alternate #cur_play {
+        background: #ddd;
+        margin: -10px;
+        margin-bottom: 0px;
+        box-shadow: 0px -2px 2px #aaa inset;
+        padding: 15px 20px;
+    }
+    .float {
+        float:right;
+    }
+    #ctrlbtns {
+        text-align: center;
+        width: calc(100% - 10px);
+        padding: 5px;
+        display: inline-block;
+    }
+    #ctrlbtns paper-icon-button {
+      margin: 3px;
+vertical-align: 7px;
+padding: 10px;
+    }
+.playerbox #superslider {
+    position: absolute;
+    margin: -25px -26px;
+    width: 470px;
+    outline: none;
+}
+    .playerbox paper-slider:not(:active) /deep/ #sliderKnob {
+        transition:all .8s linear;
+    }
+    .playerbox #sound:not(:active) /deep/ #sliderKnob, .playerbox #sound:not(:active) /deep/ #activeProgress{
+        transition:all .2s linear;
+    }
+   .playerbox #superslider /deep/ #sliderKnobInner,.playerbox #superslider /deep/ #activeProgress,.playerbox #superslider /deep/ #sliderKnobInner::before {
+       background:#f84;
+   }   
+    #posfix {
+        position: absolute;
+        bottom: 5px;
+        color:#666;
+        font-family: monospace;
+        font-size: 12px;
+        margin:10px;
+        text-align: center;
+        right:0;
+        left:0;
+    }
+    .list.on {
+        font-weight: bold;
+    }   
+    .playerbox paper-icon-button /deep/ core-icon{
+        fill:#444;
+    }
+    .playerbox.showcase , #playlist{
+        margin:50px auto;
+        max-width: 420px;
+        max-height: 150px;
+    }
+    #sound {
+    width:181px;
+        vertical-align: 4px;
+    }
+    #soundindicator,#soundindicator.active /deep/ core-icon,
+    #loopindicator,#loopindicator.active /deep/ core-icon{
+        transition:all .2s;
+        border-radius:20px;
+    }
+    #soundindicator.active /deep/ core-icon, #loopindicator.active /deep/ core-icon {
+        fill:white;
+    }
+    #soundindicator.active {
+        background:#d23f31;
+    }
+     #loopindicator.active {
+        background:#48f;
+    }
+    #playlist {
+        opacity: 0;
+        z-index: -2;
+        transition: all .4s;
+        margin-top:-40px;
+        max-height: 400px;
+        overflow: auto;
+        position: absolute;
+margin-left: calc(50% - 220px);
+        width:420px;
+    }
+    #playlist.open {
+        opacity: 1;
+        z-index: 3;
+        margin-top: -51px;
+        border-top: 1px solid #ddd;
+    }
+    #playlist core-item paper-ripple,#playlist core-item  {
+        width: calc(100% + 20px);
+        height: 40px;
+        margin:0;
+        margin-left: -10px;   
+ }
+    #playlist core-item {
+        white-space: normal;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        padding:0 10px;
+        width: 100%;
+        
+    }
+    #playlist paper-input {
+        width:300px;
+    }
+    #addnew {
+        margin: 10px -10px -10px -10px;
+padding: 10px 10px 0 10px;
+        border-top:1px solid #ddd;
+        
+    }
+    .menu .playerbox {
+        transition:all .2s;
+        margin-top:170px;
+    }
+</style>
+
+<script>
+    fome = { primaryColor: "#F84", theme: 0};
+    
+wd=window.innerWidth;
+play =  {};
+play.history=function (call) {
+    play.history.store[play.history.store.length]=call;
+};//function for storing music
+play.history.store=[];    
+play.offline={};
+play.ui = {};  
+play.ui.isEnabled=true; 
+play.ui.playlist = function() {
+    $('#playlist').toggleClass('open');
+}    
+play.isLooping=false;
+
+play.cur=0;
+play.isStopped=true;
+play.chg = function() {  
+    if (play.isStopped==true)
+    {
+    play.dur=myaudio.duration;
+   // play_dur.innerHTML=Math.ceil(play.dur);
+    superslider.max=play.dur;
+    myaudio.play();
+    play.upd(); 
+    play.isStopped=false;
+    music_fab.icon='av:pause';
+    }
+    else {
+    myaudio.pause();   
+    play.isStopped=true;
+        music_fab.icon='av:play-arrow';
+    }
+     cur_play.innerHTML=myaudio.src;
+}
+
+play.upd = function() {
+    play.isInitialised=true;
+    
+    play.lst=play.cur;
+    play.cur=myaudio.currentTime;
+        if (!play.disableTrackUpd8) {superslider.value=play.cur;}//graphical update. If searching in track, slider will not be updated
+        else {console.log('dis');}
+   // play_cur.innerHTML=Math.ceil(play.cur);
+    play.dur=myaudio.duration;
+   // play_dur.innerHTML=Math.ceil(play.dur);
+    superslider.max=play.dur;
+    if (play.dur==superslider.value)//if track ended
+    {
+        if (play.isLooping==false)   {
+            play.history.next();      
+        }
+        else {
+            myaudio.currentTime=0; //looping on
+        }
+        myaudio.play();
+    }
+    $('#bufferr').removeClass('on');
+    $('paper-fab').removeClass('buffering');
+    if ((myaudio.currentTime>5))
+    {
+        if((superslider.value>=myaudio.buffered.end(myaudio.buffered.length-1)))
+        {
+            $('#bufferr').addClass('on');
+            $('paper-fab').addClass('buffering');
+        }
+       
+    }  
+    
+    setTimeout(function(){
+        play.upd();
+    },200);
+}
+play.loop = function() {
+    if (play.isLooping) {
+        play.isLooping=false;
+    }
+    else {
+        play.isLooping=true;
+    }
+    $('#loopindicator').toggleClass('active');
+}
+
+play.isMuted=false;
+play.savedVolume=0;
+play.mute = function() {
+    if (play.isMuted)   {
+        myaudio.volume=play.savedVolume;
+        play.isMuted=false;
+    }
+    else {
+        play.savedVolume=myaudio.volume;
+        myaudio.volume=0;
+        play.isMuted=true;
+    }
+    sound.value=myaudio.volume*100;
+    $('#soundindicator').toggleClass('active');
+}  
+play.sound = function (call) {
+     play.isMuted=false;
+    myaudio.volume=Math.ceil(call)/100;
+     $('#soundindicator').removeClass('active');
+}
+play.count=0;
+play.load = function(call,m) {//számok betöltésekor fut le
+   play.isStopped=true;
+   if (m) myaudio.pause();
+   myaudio = new Audio(call);   
+   myaudio.currentTime=0;
+   console.log('[LOAD]'+call, myaudio.currentTime);
+   play.history(call);//creating history
+   playlist_content.innerHTML+="<core-item class='list' onclick='play.jump("+play.count+")'><paper-ripple></paper-ripple>"+call+"</core-item>"    ;   
+   play.count++;
+   myaudio.currentTime=0;
+    
+}
+play.jump = function(jumpTo) {//go to a specific ID
+  play.history.load(play.history.store[jumpTo]);  
+  $('.list').removeClass('on');
+  $($('.list')[jumpTo]).addClass('on');    
+}
+play.history.load = function(call)//szám váltásakor ez fut le, frissiti
+{
+   
+   myaudio.pause();
+   myaudio = new Audio(call);   
+   myaudio.currentTime=0;
+   console.log('[LOAD]'+call);
+   $('.list').removeClass('on');
+   $($('.list')[$('.list').length-play.history.state]).addClass('on');    
+   myaudio.play();
+   superslider.value=0;
+   myaudio.volume=sound.value/100;
+   cur_play.innerHTML=call;
+   
+}
+
+play.history.state=2;//hol van a normáloz képest
+    
+play.history.prev = function() {//go to the previous
+    play.history.state--;
+    play.history.load(play.history.store[play.history.store.length-play.history.state]);
+    
+}    
+play.history.next = function() {//to to the next
+    play.history.state++;
+    play.history.load(play.history.store[play.history.store.length-play.history.state]);
+}   
+//loopint
+
+
+//offline loading
+play.offline.open = function(name) {
+    play.history.state=2;
+    qstore= (localStorage['PFMP'+name]).split(',');
+    playlist_content.innerHTML="";
+    for (i=0;i<qstore.length;i++)
+    {
+        play.load(qstore[i]);
+    }
+}
+play.offline.save = function(name) {
+    (localStorage['PFMP'+name])=play.history.store;
+    console.log('[SAVE] as '+name);
+}
+
+play.disableTrackUpd8=false;
+superslider.onmousedown = function(){play.disableTrackUpd8=true;};
+document.body.onmouseup = function(){play.disableTrackUpd8=false;};
+superslider.onchange = function() {
+    if (Math.abs(play.cur-superslider.immediateValue)>1) {
+       if (play.isInitialised==true) {
+        myaudio.currentTime=superslider.immediateValue;
+       }
+        console.log(superslider.immediateValue);
+        
+    }
+ //   console.log(superslider.value+'-'+play.cur)
+}
+superslider.onmouseup = function() {
+    
+        myaudio.currentTime=superslider.immediateValue;
+        console.log(superslider.immediateValue);
+}
+    
+
+
+    
+</script>
+
+
+<link rel="import" href="include_minimalist.html">
+  <link rel="import" href="elementile.html">
+<script>
+play.load('http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=e990c6aa28a1a79512b4ed7a8c4eb7ff&id=2108346868&stream=1&ts=1420141473.0',false);
+play.load('http://elemential.net/rontap/rad.mp3',false);
+play.load('http://elemential.net/rontap/bbc.mp3',false);
+play.load('http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=b7616383c9e9e21a93b321c97ea938be&id=4135189738&stream=1&ts=1420230559.0',false);
+
+play.history.state=1;
+    
+
+</script>

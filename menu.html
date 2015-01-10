@@ -1,0 +1,113 @@
+<div id='emenuholder'>
+<div id="emenu">
+    <div id="emenu_color"></div>
+    <div id="e_apps">
+        <img src="http://elemential.net/elementipg.png" class="e_applist">
+        <paper-ripple></paper-ripple> 
+        
+        <span>
+            <div class="flatcard image e_applist" onclick="fome.jumpTo('http://elemential.net/',this.style.background);"><core-icon icon="apps"></core-icon>
+                <paper-ripple></paper-ripple>
+            </div>
+            <div class="flatcard image e_applist" style="background:#F84;"  onclick="fome.jumpTo('http://elemential.net/polyfome/player.html');"><core-icon icon="av:play-arrow" style="fill:white;"></core-icon>
+                <paper-ripple></paper-ripple>
+            </div>
+            <div class="flatcard image e_applist" style="background:#F44;" onclick="fome.jumpTo('http://elemential.net/rontap/kikerdezo_offline.html',this.style.background);"><core-icon icon="swap-driving-apps-wheel" style="fill:white;"></core-icon>
+                <paper-ripple></paper-ripple>
+            </div>
+            <div class="flatcard image e_applist" style="background:white;"><core-icon icon="today" style="fill:#48F;"></core-icon>
+                <paper-ripple></paper-ripple>
+            </div>
+            <div class="flatcard image e_applist" style="background:#22B94F;"><core-icon icon="av:games" style="fill:white;"></core-icon>
+                 <paper-ripple></paper-ripple>
+            </div>
+            <div class="flatcard image e_applist" style="background:#48f;" onclick="fome.jumpTo('http://elemential.net/rontap/random.html',this.style.background);"><core-icon icon="av:shuffle" style="fill:white;"></core-icon>
+                <paper-ripple></paper-ripple>
+            </div>
+        </span>
+    </div> 
+    
+    <div class="lapis">
+        <container>
+            <paper-button class="lapisbox" label="belépés">
+                <paper-ripple></paper-ripple>
+                </paper-button>
+        </container>
+    </div>
+    
+</div>
+</div>
+    
+
+<style>
+   .flatcard core-icon {
+       width: 54px;
+        height: 54px;
+        margin-left: 6px;
+        margin-top: 6px;
+        fill:black;
+   }
+    #e_apps span {
+        margin-top:11px;
+        position: absolute;
+        margin-left:125px;
+        white-space: nowrap;
+        
+    }
+    .card.image.e_applist {
+        width:80px;
+        height:80px;
+        display: inline-block;
+    }
+     
+    .flatcard paper-ripple {
+        position: absolute;
+margin: -10px;
+width: 86px;
+height: 86px;
+margin-top: -70px;
+}
+    
+    #e_apps img {
+        width:72px;
+    }
+    .e_applist {
+       padding: 7px;
+        background: #48F;
+        margin: 16px;
+        box-shadow: 0px 1px 1px #444;
+    }
+    #e_apps {
+        z-index: 2;
+    }
+.lapis .lapisbox {
+    border: 1px solid rgba(50,50,50,.5);
+margin: 15px;
+padding: 0px;
+color: #222;
+background: white;
+width: 120px;
+float: right;
+    position: absolute;
+    right:0px;
+   margin-top:-105px;
+}
+   
+  .lapis .lapisbox:before {
+      width:5px;
+      height: 5px;
+      background: red;
+  }  
+   
+    
+     .flatcard {
+        display:inline-block;
+        padding: 10px;
+        margin: 5px;
+        box-shadow: 0 1px 1px #444;
+        background: white;
+        width:66px;
+        height:66px;
+    }
+    
+</style>
