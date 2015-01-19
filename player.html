@@ -386,9 +386,9 @@ play.offline.save = function(name) {
 }
 
 play.disableTrackUpd8=false;
-superslider.onmousedown = function(){play.disableTrackUpd8=true;};
+//superslider.onmousedown = function(){play.disableTrackUpd8=true;};
 document.body.onmouseup = function(){play.disableTrackUpd8=false;};
-superslider.onchange = function() {
+/*superslider.onchange = function() {
     if (Math.abs(play.cur-superslider.immediateValue)>1) {
        if (play.isInitialised==true) {
         myaudio.currentTime=superslider.immediateValue;
@@ -406,18 +406,19 @@ superslider.onmouseup = function() {
     
 
 
-    
+    */
 </script>
 
 
 <link rel="import" href="include_minimalist.html">
-  <link rel="import" href="elementile.html">
+ <!--<link rel="import" href="elementile.html">-->
 <script>
+    /*
 play.load('http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=e990c6aa28a1a79512b4ed7a8c4eb7ff&id=2108346868&stream=1&ts=1420141473.0',false);
 play.load('http://elemential.net/rontap/rad.mp3',false);
 play.load('http://elemential.net/rontap/bbc.mp3',false);
 play.load('http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=b7616383c9e9e21a93b321c97ea938be&id=4135189738&stream=1&ts=1420230559.0',false);
-
+*/
 play.history.state=1;
     
 
