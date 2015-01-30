@@ -6,8 +6,6 @@
 
 if (fome.location===undefined) { fome.location=''; }
 
-
-
 mostev = new Date().getFullYear(); //mostév
 /*
 if (fome.theme!=0)
@@ -25,8 +23,7 @@ colors = ['#e51c23', '#9e9e9e', '#673ab7', '#3f51b5', '#5677fc', '#03a9f4', '#00
 fome.var={};
 
 
-
-function goto(site) {
+function goto(site) { //navigation have to move later to OWN js
     removeopenmenu();
     switch (site) {
 
@@ -37,7 +34,7 @@ function goto(site) {
 }
 whereAreWe = 'home';
 
-function gotoinsite(id) {
+function gotoinsite(id) {  //navigation
     $('#menuelements>div').removeClass('on');
     $('#menuelements>div').css('display', 'none');
     $('#' + id).css('display', 'block');
@@ -100,26 +97,6 @@ function outcollapse(id) {
 }
 
 
-fome.page = {
-	'reload' : function(site) {
-		window[site].innerHTML="";
-		$('#'+site).load(fome.location+site+".html");
-		console.log(site+' reloaded');
-	},
-    'open' : function(site,name,hash) {
-        window.open(site +'#'+hash,name,"width=980 height=650");
-    }
-};
-fome.tryit = function(hash) {
-    window.open('tryit.html#'+hash,'Rontap TryIt',"width=980 height=650");
-}
-fome.devmode = function(call) {
-    if (call) {fome.devmodeActivate();}
-    else {fome.devmodeDeActivate();}
-}
-fome.devmodeActivate = function() {
-    
-}
 //endfunctions
 fome.jumpTo = function(call,sec) {
     $('body').removeClass("menu");
@@ -132,6 +109,7 @@ if (fome.loc===undefined) {
 	fome.loc='';
 }
 console.log(location);
+
 if (fome.theme==1)
 {
 $('fome-element').load("http://elemential.net/polyfome/main.html");//betölti az oldalsávot
@@ -148,17 +126,17 @@ setTimeout(function () {
     switchtab('io', 0, 3);
     
     if (fome.theme==1) {  
-    for (i=0;i<elementsload.length;i++)
-    {
-    $('fome-element')[0].innerHTML=$('fome-element')[0].innerHTML.replace('%'+elementsload[i]+'%',fome[elementsload[i]])
-    }
-    for (i=0;i<fome.incl.length;i++)
-    {
-        incllist+='<div id="'+fome.incl[i]+'"></div>';
-    }	
-     $('fome-element')[0].innerHTML=$('fome-element')[0].innerHTML.replace('%includes%',incllist);
-    
-    }//1
+        for (i=0;i<elementsload.length;i++)
+        {
+        $('fome-element')[0].innerHTML=$('fome-element')[0].innerHTML.replace('%'+elementsload[i]+'%',fome[elementsload[i]])
+        }
+        for (i=0;i<fome.incl.length;i++)
+        {
+            incllist+='<div id="'+fome.incl[i]+'"></div>';
+        }	
+         $('fome-element')[0].innerHTML=$('fome-element')[0].innerHTML.replace('%includes%',incllist);
+
+        }//1
     else if (fome.theme==2) {
 	    for (i=0;i<elementsload.length;i++)
 	    {
@@ -176,7 +154,7 @@ fome.var.notifycount=0;
 fome.notify = function(name,duration,onclick,helptext,helptext_color,helptext_onclick,spec_class) {
         
 	a='<paper-toast text="'+name+'" onclick="'+onclick+'"id="fome_notification'+(fome.var.notifycount)+'" class="'+spec_class+'">';
-	if (helptext!==undefined){a+='<div style="color:'+helptext_color+';" onclick="'+helptext_onclick+'">'+helptext+'</div>';console.log('jani');}
+	if (helptext!==undefined){a+='<div style="color:'+helptext_color+';" onclick="'+helptext_onclick+'">'+helptext+'</div>';fome.log('jani');}
 	a+='</paper-toast>';
 	$('fome-element').append(a);
 	setTimeout(function(){
@@ -188,4 +166,4 @@ fome.notify = function(name,duration,onclick,helptext,helptext_color,helptext_on
 	},100);
 }
 
-console.log('POLYFOME loaded');
+fome.log('POLYFOME 1.1.0 loaded');
