@@ -1,0 +1,271 @@
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <script>
+        fome = {
+            'link' : ['LinkOne','LinkTwo',['name','one','two']],
+            'incl' : ['welcome','markdownr'],
+            'title' : "Teszt",
+            'splashname': "E CHAT",
+            'extratitle' : "polyfome ",
+            'navname' : "menü",
+            'logos' : "-",
+            'location':"incl/",
+            'fab' :[true,'right','new','fn'],
+		    'primaryColor' : '#607D8B',
+			'secondaryColor' : '#f84',
+            'theme':"0",
+	        'themeflags':"" 	,
+            'include':"markdown"
+        }
+        </script>
+    </head>
+    <body>
+        <div id="connect">&nbsp;</div>
+        
+        <div id="CONTENT">
+            <div class="card away center" id="news">
+                <span>
+                <h2>Új tiszavirág életű chat</h2>
+                <span> Ha van már azonosítód, akkor írd be</span>
+                <paper-input floatinglabel label="beszélgetés neve" id="gimmea"></paper-input>
+                </span>
+                <paper-fab icon="av:play-arrow" id="fabc" onclick="connect();" ></paper-fab>
+            </div> 
+        </div>
+        
+        <div id="CHAT">
+            
+            <div class="card away center" id="chatholder">
+                <div id="conversation"></div>
+                <div id="chatinput">
+                   <paper-input-decorator  label="üzenet">
+                        <textarea onclick="sendMessage();"></textarea>
+                    </paper-input-decorator>
+                </div>
+            </div>
+        </div>
+        <style>
+            #connect::before {
+              position: fixed;
+                top: -43px;
+                left: 0;
+                right: 0;
+                min-height: 35px;
+                content: '';
+                text-align: center;
+                transition: all .4s;
+                color: white;
+                font-size: 20px;
+                padding: 0;
+                padding-top: 8px;
+                border-bottom: 1px solid #ddd;
+            }
+             #connect.slup::before {
+                 top: -43px;
+                 content: 'Connection Restored!';
+                 transition: all .6s;
+             }
+            #connect.bad::before {
+                content:'Connection Lost';
+                background: #f44;
+                top:0px;
+                transition: all .4s;
+            }
+            #connect.works::before {
+                content:'Connection Restored!';
+                background: #4CAF50;
+                top:0px;
+                transition: all .4s;
+            }
+           
+           #CHAT {
+               display: none;
+           }
+            .inchat #CHAT {
+                display:block;
+              
+            }
+            #chatholder paper-input-decorator {
+                position: fixed;
+                width: 620px;
+                bottom: 99px;
+                margin: 7px -15px;
+                padding: 5px;
+            }
+            #chatholder paper-input-decorator textarea {
+                padding:10px;
+            }
+            #chatholder {
+                position: fixed;
+                left:calc(50% - 300px);
+                width: 600px;
+                top:100px;
+                bottom:100px;
+                height:auto;
+            }
+            .card.away.center {
+                width: 400px;
+                margin: 10px auto;
+                height: 157px;
+                transition:.4s;
+            }
+            .two #news {
+                width:450px;         
+            }
+            .inchat #news {
+                margin-top:-220px !important;
+                zoom:.8;
+            }
+            .center>span {
+                display: inline-block;
+            }
+            .two .center>span {
+                 padding-left: 177px;
+                 transition: all .4s ease-out;
+            }
+            
+             #news {
+                margin-top:150px;
+            }
+            paper-fab {
+               background: #607D8B;
+                position: absolute;
+                margin-left: 383px;
+                margin-top: -100px;
+                transition: all .4s ease-out;
+            }
+            .two paper-fab {
+                margin-left: -11px;
+                border-radius: 0px;
+                width: 177px;
+                height: 177px;
+                margin-top: -165px;
+            }
+            splash-element #ins {
+                color: rgb(96, 125, 139);
+                bottom: 0%;
+                background: rgba(250,250,250,0.6);
+                transition:all .4s;
+                top: 0px;
+                padding-top: 20%;
+            }
+            chat-message {
+                display: block;
+                -webkit-animation:slup .4s;
+            }
+            @-webkit-keyframes slup {
+                0% {margin-top:10px;opacity: 0;}
+                100% {margin-top:0px;opacity: 1;}
+            }
+        </style>
+        <script>
+           
+        function connect() {
+            $('body').addClass('two');
+            $('#news h2').html('felhasználónév');
+            $('#news span span').html('nyomj entert a belépéshez');
+            $('paper-fab /deep/ paper-ripple').removeClass('circle');
+            gimmea.label="Say My Name";
+            fabc.icon="";
+        }
+            setTimeout(function(){
+                     $('paper-input').keypress(function (e) {
+                      if (e.which == 13) {
+                        console.log('enter');
+                        join();
+                          return false;    
+                      }
+                    });
+                   $('textarea').keypress(function (e) {
+                      if (e.which == 13) {
+                        console.log('enter');
+                        sendMessage(this.value);
+                          event.preventDefault();
+                          this.value="";
+                          return true;    
+                          
+                      }
+                    });
+                 fome.devmode(false);
+            },1250)
+           
+        function join() {
+            $('body').addClass('inchat');
+            startGetConnected();
+        }
+        function sendMessage(text) {
+           //ide kell a küldés 
+            a= new Date();
+            b=a.getHours()+':'+a.getMinutes()+':'+a.getSeconds();
+            recieveMessage(text,'me',b+' he');
+        }  
+        function recieveMessage(text,whom,when){
+           
+            $('#conversation').append('<chat-message text='+text+' writer='+whom+' date='+String(when)+'></chat-message>')
+        }    
+            
+        nonet = false; //ha nincs net
+        function startGetConnected() {
+            setTimeout(function(){
+                if ((fome.isConnected())&&(nonet)) {
+                    $('#connect').removeClass('bad');
+                    $('#connect').addClass('works');
+                    setTimeout(function(){
+                        $('#connect').addClass('slup');
+                        $('#connect').removeClass('works');
+                    },1000)
+                    nonet=false;
+                }
+                else if (fome.isConnected()==false) {
+                    $('#connect').addClass('bad');
+                    $('#connect').removeClass('slup');
+                    nonet=true;
+                }
+                startGetConnected();
+            },1000);
+        }
+        </script>
+           
+        <fome-menu></fome-menu>
+        <fome-element></fome-element>
+        <splash-element></splash-element>
+        <link rel="import" href="include.html">
+        <link rel="import" href="elementile.html">
+        
+         <polymer-element name="chat-message" attributes="text writer date" noscript>
+              <template>
+                    <span id="imagebox">&nbsp;</span>
+                    <b>{{writer}}</b> at <i>{{date}} </i> <br>
+                    <div>{{text}}</div>
+                    <br>
+                  <style>
+                    #imagebox {
+                        display: inline-block;
+                        width: 30px;
+                        height: 30px;
+                        background: #48F;
+                        vertical-align: -5px;
+                    }
+                      div {
+                          margin-left: 34px;
+                          margin-top: -15px;
+                          max-width: 100%;
+                            word-wrap: break-word;
+                      }
+                      i {
+                          color:#666;
+                          width: 20px;
+                       
+                         
+                      }
+                  </style>
+              </template>
+              
+        </polymer-element>
+        
+            
+        
+    </body>
+</html>

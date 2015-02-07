@@ -42,7 +42,7 @@ fome.log = function(log) {
     fome.log.history[this.length]
 }
 fome.log.history=[];
-
+/*
 //METHANE 
 fome.packages = {
     'markdown' : {
@@ -79,3 +79,4 @@ function polyfomeInnerInclude(call) {//this does the actual work. background ill
 
 fome.include(polyfomeLoadPackages);//load
 polyfomeLoadPackages="[DO NOT USE]"
+*/

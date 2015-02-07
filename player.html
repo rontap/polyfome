@@ -44,11 +44,88 @@
 <br><hr><br>
    <input id="loadls"><button onclick="play.offline.save(loadls.value)">saveToLocal</button><button onclick="play.offline.open(loadls.value)">openFromLocal</button>
 -->
+<script>
+    function pf() {
+        $('#playlist').removeClass('open');
+     $('#useh').addClass('off');
+     $('#abouth').toggleClass('off');
+    $( $('#posfix span')[1]).removeClass('on');
+     $( $('#posfix span')[0]).toggleClass('on');
+        
+    }
+         function pf2() {
+                $('#playlist').removeClass('open');
+            $('#abouth').addClass('off');
+            $('#useh').toggleClass('off');
+    $( $('#posfix span')[0]).removeClass('on');
+     $($('#posfix span')[1]).toggleClass('on');
+          
+         }
+   
+</script>
+<div id="posfix">Elemential Music Player. 
+    <span class="hoverc" onclick="pf(0)">About</span>
+    <span class="hoverc" onclick="pf2()">Use</span>
+    Created by Elemential</div>
 
-<div id="posfix">Elemential Music Player. Created by Elemential 2014-2015</div>
-
+<div class="card away rollcard off" id="abouth">
+<h2 class="away">About</h2>
+   <div class="away"> Elemential Music player (EMP) 2014-2015<br>
+    Buildt using Polyfome & Polymer. It uses googles material design.<br>
+    It can be used as a desktop as well as a web music player.<br><br>
+    <bb>Functions</bb>
+    <li>Play music, control time and sound</li>
+    <li>create and save playlists offline (doesnt save the music itself)</li>
+     <li>Replay and jump between tracks</li>
+    <li><i>coming soon</i>download playlist and music. Share music</li><br>
+       Created by rontap
+    </div>
+</div>
+<div class="card away rollcard off" id="useh">
+<h2 class="away">Use in your site</h2>
+   <div class="away">
+       This Player (EMP) can be used in two different setups:
+        <li>Full player</li>
+        <li><s>Code-only</s></li>
+        First of all, you have to include player.html using polyfome<br>
+        you can check the docs here<br>
+    </div>
+</div>
 
 <style>
+    .card.rollcard {
+        
+        position: fixed;
+        left: calc(50% - 220px);
+          margin-top:-20px;
+          transition: all .2s ;
+        opacity: 1;
+         max-height: 999px !important;
+       
+    }
+    .card.rollcard.off {
+        opacity:0 !important;
+        margin-top:80px;
+       
+    }
+    .hoverc.on, .hoverc.on:hover {
+        background:#444;
+        color:#ddd;
+    }
+    .hoverc {
+        padding:1px 3px;
+        border-bottom: 1px solid #aaa;
+        opacity: .9;
+        transition: .2s all;
+    }
+    .hoverc:hover {
+        opacity: 1;
+        color:#444;
+        cursor: pointer;
+    }
+    #loadh {
+        padgin:4px;
+    }
     paper-spinner {
         position: absolute;
         margin-top: -173px;
@@ -147,7 +224,7 @@ padding: 10px;
     .playerbox paper-icon-button /deep/ core-icon{
         fill:#444;
     }
-    .playerbox.showcase , #playlist{
+    .playerbox.showcase , #playlist, .card.rollcard{
         margin:50px auto;
         max-width: 420px;
         max-height: 150px;
@@ -411,14 +488,14 @@ superslider.onmouseup = function() {
 
 
 <link rel="import" href="include_minimalist.html">
- <!--<link rel="import" href="elementile.html">-->
+<link rel="import" href="elementile.html">
 <script>
-    /*
+    
 play.load('http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=e990c6aa28a1a79512b4ed7a8c4eb7ff&id=2108346868&stream=1&ts=1420141473.0',false);
 play.load('http://elemential.net/rontap/rad.mp3',false);
 play.load('http://elemential.net/rontap/bbc.mp3',false);
 play.load('http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=b7616383c9e9e21a93b321c97ea938be&id=4135189738&stream=1&ts=1420230559.0',false);
-*/
+
 play.history.state=1;
     
 

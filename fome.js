@@ -165,5 +165,21 @@ fome.notify = function(name,duration,onclick,helptext,helptext_color,helptext_on
 	fome.var.notifycount++;
 	},100);
 }
+fome.isConnected = function() {
+        var xhr = new XMLHttpRequest();
+        var file = "http://elemential.net/aTE_A_JO_SZERVERT_HASZNALOD";
+        var randomNum = Math.round(Math.random() * 100);
+        xhr.open('HEAD', file + "?rand=" + randomNum, false);
 
+        try {
+            xhr.send();
+            if (xhr.status >= 200 && xhr.status < 304) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (e) {
+            return false;
+        }
+    }
 fome.log('POLYFOME 1.1.0 loaded');
