@@ -1,0 +1,22 @@
+<polymer-element name="error-card" attributes="header text" noscript>
+              <template>
+                  <div class="card away">
+                      <h2>{{header}}</h2>
+                      {{text}}
+                  </div>
+                  <style>
+                    div.card.away {
+                        background: #F44;
+                        margin:5px 0px;
+                        animation:epishow .4s;
+                    }
+                      h2  {
+                          margin:5px 0px;
+                      }
+                      @-webkit-keyframes epishow {
+                          
+                      }
+                  </style>
+              </template>
+              
+</polymer-element>
