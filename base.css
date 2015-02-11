@@ -63,3 +63,6 @@ core-drawer-panel {
 .trans-05 {
     transition:all .5s;
 }
+.c {
+    text-align: center;
+}
