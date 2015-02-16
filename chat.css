@@ -1,4 +1,19 @@
- .inchat #conversation {
+            #online {
+                    position: fixed;
+                    top: 70px;
+                    right: calc(50% - 305px);
+                    font-weight: 200;
+                    font-size: 24px;
+            } 
+            #online_count.joined {
+                -webkit-animation: reflow .7s;
+            }
+            @-webkit-keyframes reflow {
+                0% {opacity: 1;}
+                50% {opacity: 0;}
+                100% {opacity: 1;}
+            }
+            .inchat #conversation {
                 position: fixed;
                 overflow-y: scroll;
                 overflow-x: hidden;
@@ -55,7 +70,7 @@
             }
             #chatholder {
                 position: fixed;
-                left:calc(50% - 300px);
+                left:calc(50% - 310px);
                 width: 600px;
                 top:100px;
                 bottom:100px;
@@ -106,7 +121,7 @@
                 margin-top:150px;
             }
             paper-fab {
-               background: #607D8B;
+               background: #00BCD4;
                 position: absolute;
                 margin-left: 383px;
                 margin-top: -100px;

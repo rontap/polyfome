@@ -36,8 +36,13 @@
         </div>
         
         <div id="CHAT">
-            <h1 id="groupname1"><paper-icon-button icon="create" style=" color: red;"></paper-icon-button></h1>
-            <div class="card away center" id="chatholder">
+				<h1 id="groupname1" contenteditable="false">
+                    <span id="groupname_master"></span><!--itt változik meg a cucc-->
+                    <paper-icon-button icon="create" style=" color: #48F;" onClick="changename();" id="groupname_edit_icon"></paper-icon-button>
+                    <div id="online"><span id="online_count">X</span> online</div>
+                </h1>
+            
+				<div class="card away center" id="chatholder">
                 <div id="conversation"></div>
                 <div id="chatinput">
                    <paper-input-decorator  label="üzenet">
@@ -48,34 +53,85 @@
         </div>
         <link rel="stylesheet" type="text/css" href="chat.css">
         <style>
+            #groupname_master {
+                   padding: 8px;
+                   margin: -3px 0;
+                transition:border-bottom .4s;
+                border-bottom:2px solid transparent;
+            }
+             .inedit #groupname_master {
+                  border-bottom: 2px solid #48f;  
+                  -webkit-animation: glow 1s ; 
+             }
+            @-webkit-keyframes glow {
+                0% {background:#fff;color:444;}
+                100% {background:transparent;color:222;}
+            }
            #groupname1 
 			{ 
 			opacity: 0;
 			transition: opacity 0.4s ;
 			position: fixed;
-			left: calc(50% - 300px);
+			left: calc(50% - 310px);
 			margin-top: 60px;
 			}
 					
-			.inchat #groupname1 { opacity: 1; }
-			
+			.inchat #groupname1 { 
+                opacity: 1; 
+            }
+			#groupname_edit_icon {
+                vertical-align: -8px;
+                margin-top: 8px;
+                border-radius: 50%;
+                transition:background .4s;
+            }
             #groupname1 paper-icon-button /deep/ * {
                 fill:#444;
             }
+            /*checked*/
+            #groupname1.inedit paper-icon-button /deep/ * {
+                fill:white;
+            }
+            .inedit #groupname_edit_icon {
+                background:#48F;
+            }
         </style>
         <script>
-		groupname = "";
+		groupname = "";	
+		isEditingGroupName = false; //szerkeszti-e?
+		function changename(){
+            if (isEditingGroupName) {//ha éppen nem szerkeszti
+                if (groupname!=$('#groupname_master').html())
+                {
+                    groupname = $('#groupname_master').html();
+                    conversationNameChanged(groupname,'you');
+                }         
+                $('#groupname_master').attr('contenteditable',false);
+                $('#groupname_edit_icon').attr('icon','create');
+                $('#groupname1').removeClass('inedit');
+                
+                isEditingGroupName=false;
+            }
+            else {
+                $('#groupname_master').attr('contenteditable',true);
+                $('#groupname_edit_icon').attr('icon','done');
+                $('#groupname1').addClass('inedit');
+                isEditingGroupName=true;
+            }
+            
+			
+		}
+		
         function connect() {
 			groupname = gimmea.value ;
-			$('#groupname1').prepend(groupname);
+			$('#groupname_master').html(groupname);
             $('body').addClass('two');
             $('#news h2').html('felhasználónév');
             $('#news span span').html('nyomj entert a belépéshez');
             $('paper-fab /deep/ paper-ripple').removeClass('circle');
             gimmea.label="Say My Name";
             fabc.icon="";
-			
-        }
+		   }
             phase=0;
             setTimeout(function(){
                      $('paper-input').keypress(function (e) {
@@ -103,6 +159,12 @@
                           
                       }
                     });
+                
+                    $('#groupname_master').keypress(function (e) {
+                        if (e.which == 13) {
+                        changename();    
+                        }
+                    });
                  fome.devmode(false);
             },1250)
            
@@ -112,10 +174,8 @@
         }
         function sendMessage(text) {
            //ide kell a küldés 
-            a= new Date();
-            b=a.getHours()+':'+a.getMinutes()+':'+a.getSeconds();
-            console.log(text);
-            receiveMessage(text,'me',b+' he');
+           
+            receiveMessage(text,'me',dateHelper()+' he');
         }  
         function receiveMessage(text,who,when){
            
@@ -123,23 +183,39 @@
         }    
         function peopleArrived(who) 
         {
-            $('#conversation').append('<chat-action who='+who+' icon="open-in-browser" action="arrived" date='+eventHelper()+' bullshit="90" ></chat-action>');
+            $('#conversation').append('<chat-action who='+who+' icon="open-in-browser" action="arrived" date='+dateHelper()+' bullshit="90" ></chat-action>');
             $('chat-message  /deep/ paper-ripple').removeClass('recenteringTouch circle');
         }
         function peopleLeft(who,when)
         {
-            $('#conversation').append('<chat-action who='+who+' icon="open-in-browser" action="left" date='+eventHelper()+' bullshit="-90" ></chat-action>');
+            $('#conversation').append('<chat-action who='+who+' icon="open-in-browser" action="left" date='+dateHelper()+' bullshit="-90" ></chat-action>');
              $('chat-message  /deep/ paper-ripple').removeClass('recenteringTouch circle');
         }
         function conversationNameChanged(toWhat,who) {
              
-            $('#conversation').append('<chat-action who='+who+' icon="create" action="renamed&nbsp;the&nbsp;conversation to" date='+eventHelper()+' bullshit="0" toSth="'+toWhat+'"></chat-action>');
+            $('#conversation').append('<chat-action who='+who+' icon="create" action="renamed&nbsp;the&nbsp;conversation to" date='+dateHelper()+' bullshit="0" toSth="'+toWhat+'"></chat-action>');
              $('chat-message  /deep/ paper-ripple').removeClass('recenteringTouch circle');
         }
-        function eventHelper() {
+        function updateOnlineCount(count) {
+             $('#online_count').addClass('joined');
+            setTimeout(function() {
+                 $('#online_count').html(count);
+                 setTimeout(function() {
+                   $('#online_count').removeClass('joined');  
+                 },350);
+            },350)
+           
+        }    
+            
+        function dateHelper() {
             a= new Date();
-             b=a.getHours()+':'+a.getMinutes()+':'+a.getSeconds();
+             b=nd(a.getHours())+':'+nd(a.getMinutes())+':'+nd(a.getSeconds());
             return b;
+        }
+        function nd(ine) //normalise date 
+        {
+            if (ine<10)  return String('0'+ine) 
+            else return ine;
         }
         nonet = false; //ha nincs net
         function startGetConnected() {
@@ -162,7 +238,7 @@
             },10000);*/
         }
             //does everything
-           
+           updateOnlineCount(6);
         </script>
            
         <fome-menu></fome-menu>
@@ -197,6 +273,7 @@
                        font-size: 15px;
                          
                       }
+                     
                   </style>
               </template>
               
