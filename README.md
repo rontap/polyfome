@@ -8,15 +8,15 @@ example: http://elemential.net/polyfome/test.html
 Recent Changes in 1.1.1
 =
 1.1.1
-added: chat now almost works
-added: app-icon tag to tag.html
-bugfix:removed platform.js from include
-fix: loading imgs in shadow DOM
+added: chat now almost works  
+added: app-icon tag to tag.html  
+bugfix:removed platform.js from include  
+fix: loading imgs in shadow DOM  
 
 1.1.0
-bugfix: Polymer didnt load on http protocol.
-added: p2p chat beta functionality
-added: basic support for packages
+bugfix: Polymer didnt load on http protocol.  
+added: p2p chat beta functionality  
+added: basic support for packages  
 
 Features
 ========
