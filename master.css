@@ -165,7 +165,7 @@ height: 56px;
           -webkit-filter: saturate(100%);
       }
   }
-  img.load,.loadimg img,.self-load, html /deep/ .loadimga {
+  img.load,.loadimg img,.self-load {
       opacity: 0;
       -webkit-animation-name: loadimg;
       -webkit-animation-duration: 2s;
@@ -271,7 +271,7 @@ height: 56px;
       font-size: 0.9em;
       padding: 0 5px;
   }
- 
+
 
 /*kombinált lista*/
 

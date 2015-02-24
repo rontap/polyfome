@@ -13,18 +13,13 @@
             'logos' : "-",
             'location':"incl/",
             'fab' :[true,'right','new','fn'],
-		    'primaryColor' : '#00BCD4',
+		    'primaryColor' : '#607D8B',
 			'secondaryColor' : '#f84',
             'theme':"0",
 	        'themeflags':"" 	,
             'include':"markdown"
         }
         </script>
-        
-        <script src="../cryptoblog/chat/jsrsasign-latest-all-min.js"></script>
-        <script src="../cryptoblog/chat/sjcl.js"></script>
-        <script src="../cryptoblog/chat/communication.js"></script>
-        
     </head>
     <body>
         <div id="connect">&nbsp;</div>
@@ -44,7 +39,7 @@
 				<h1 id="groupname1" contenteditable="false">
                     <span id="groupname_master"></span><!--itt változik meg a cucc-->
                     <paper-icon-button icon="create" style=" color: #48F;" onClick="changename();" id="groupname_edit_icon"></paper-icon-button>
-                    <div id="online" onclick="showOnline();"><span id="online_count">X</span> online</div>
+                    <div id="online"><span id="online_count">X</span> online</div>
                 </h1>
             
 				<div class="card away center" id="chatholder">
@@ -54,40 +49,52 @@
                         <textarea id="main_textarea"></textarea>
                     </paper-input-decorator>
                 </div>
-                
-                
-            </div>
-        </div>
-        
-        <div id="SIDEBAR">
-            <div class="away card" id="users_inchat">
-                <div>Lia</div>
-                <div>Heisenberg</div>
-                <div>Ellie</div>
-                <div>g.dr. TAP HvT</div>
-            </div>
-            
-            <div class="card away" id="user_profile">
-                <bb class="f-28 inway block">Józsi</bb>
-               <table>
-                   <tr>
-                        <td>Csatlakozott</td><td>02.45 20:45:46</td>
-                   </tr> 
-                   <tr>
-                        <td>Üzenetek száma</td><td>42</td>
-                   </tr> 
-                   <tr>
-                        <td>Azonosító</td><td>615</td>
-                   </tr> 
-               </table>
-                <br>
-                <paper-fab icon="communication:message" id="" onclick="" ></paper-fab>
-                <paper-icon-button icon="remove-circle" class="black-red" id="mute_ppl"></paper-icon-button>
             </div>
         </div>
         <link rel="stylesheet" type="text/css" href="chat.css">
         <style>
-         
+            #groupname_master {
+                   padding: 8px;
+                   margin: -3px 0;
+                transition:border-bottom .4s;
+                border-bottom:2px solid transparent;
+            }
+             .inedit #groupname_master {
+                  border-bottom: 2px solid #48f;  
+                  -webkit-animation: glow 1s ; 
+             }
+            @-webkit-keyframes glow {
+                0% {background:#fff;color:444;}
+                100% {background:transparent;color:222;}
+            }
+           #groupname1 
+			{ 
+			opacity: 0;
+			transition: opacity 0.4s ;
+			position: fixed;
+			left: calc(50% - 310px);
+			margin-top: 60px;
+			}
+					
+			.inchat #groupname1 { 
+                opacity: 1; 
+            }
+			#groupname_edit_icon {
+                vertical-align: -8px;
+                margin-top: 8px;
+                border-radius: 50%;
+                transition:background .4s;
+            }
+            #groupname1 paper-icon-button /deep/ * {
+                fill:#444;
+            }
+            /*checked*/
+            #groupname1.inedit paper-icon-button /deep/ * {
+                fill:white;
+            }
+            .inedit #groupname_edit_icon {
+                background:#48F;
+            }
         </style>
         <script>
 		groupname = "";	
@@ -121,7 +128,7 @@
             $('body').addClass('two');
             $('#news h2').html('felhasználónév');
             $('#news span span').html('nyomj entert a belépéshez');
-            $('#fabc /deep/ paper-ripple').removeClass('circle');
+            $('paper-fab /deep/ paper-ripple').removeClass('circle');
             gimmea.label="Say My Name";
             fabc.icon="";
 		   }
@@ -165,20 +172,14 @@
             $('body').addClass('inchat');
             startGetConnected();
         }
-            
-        function showOnline() {
-            $('body').removeClass('inprofile');
-            $('body').addClass('inonline');
-            $('html /deep/ #UID').parent().removeClass('faded');
-        }
         function sendMessage(text) {
            //ide kell a küldés 
-            chat.send(text);
-            receiveMessage(text,'me',dateHelper(),5,true);
+           
+            receiveMessage(text,'me',dateHelper()+' he');
         }  
-        function receiveMessage(text,who,when,userid,FORCE_COLOR){
-           var FORCE_COLOR;
-            $('#conversation').append('<chat-message text='+text.replace(/\s/g, '&nbsp;')+' writer='+who+' date='+String(when)+' userid='+userid+' color='+getColorForUser(userid,FORCE_COLOR)+'></chat-message>')
+        function receiveMessage(text,who,when){
+           
+            $('#conversation').append('<chat-message text='+text.replace(/\s/g, '&nbsp;')+' writer='+who+' date='+String(when)+'></chat-message>')
         }    
         function peopleArrived(who) 
         {
@@ -191,12 +192,9 @@
              $('chat-message  /deep/ paper-ripple').removeClass('recenteringTouch circle');
         }
         function conversationNameChanged(toWhat,who) {
-            if (groupname!=toWhat) { 
-            chat.setRoomName(toWhat);
+             
             $('#conversation').append('<chat-action who='+who+' icon="create" action="renamed&nbsp;the&nbsp;conversation to" date='+dateHelper()+' bullshit="0" toSth="'+toWhat+'"></chat-action>');
              $('chat-message  /deep/ paper-ripple').removeClass('recenteringTouch circle');
-                groupname=toWhat;
-            }
         }
         function updateOnlineCount(count) {
              $('#online_count').addClass('joined');
@@ -208,29 +206,7 @@
             },350)
            
         }    
-           function activateXRay(classname) {
-               $('body').removeClass('inonline');
-               $('html /deep/ #UID').parent().removeClass('faded');
-               $('html /deep/ #UID:not(.'+classname+')').parent().addClass('faded');
-               $('body').addClass('inprofile');
-               getUserInformation(classname.slice(3,this.length));
-               
-           } 
-            matc=['F44336','E91E63','9C27B0','673AB7','3F51B5','196F3','03A9F4','00BCD4','009688','4CAF50','8BC34A','CDDC39','FFEB3B','FFC107','FF9800','FF5722','795548','9E9E9E','607D8B'];
             
-        function getColorForUser(id,FORCE_COLOR) {
-            if (FORCE_COLOR!==undefined) {
-                return '48F';
-            }
-            else {
-                return  matc[id%matc.length];
-            }
-               
-        }
-        function getUserInformation(id) {
-            //this will be the card that updates everytinh
-            console.log(id);
-        }
         function dateHelper() {
             a= new Date();
              b=nd(a.getHours())+':'+nd(a.getMinutes())+':'+nd(a.getSeconds());
@@ -262,42 +238,7 @@
             },10000);*/
         }
             //does everything
-           //updateOnlineCount(6);
-            
-
-            function scl() {
-                receiveMessage('sédgs','heimdal','time',9);
-                receiveMessage('sédgsdj sgjsádé gsklgájys áékgjys égyjlse gáées ggs','rontap','sgsg',5);
-                receiveMessage('sédgs','rontap','time',5);
-                receiveMessage('sédgs','me','sth',6);
-                receiveMessage('nope','rontap','time',5);
-                receiveMessage('sédgs','heimdal','time',9);
-            }
-           function connectT() {
-            	chat = new Cryptoblog.Chat(location.hash.slice(1,location.hash.length));
-		chat.addEventListener("ready",function(event){console.log(event)});
-		chat.addEventListener("join",function(event){
-            console.log(event)
-            peopleArrived(event.data,dateHelper());
-        });
-		chat.addEventListener("leave",function(event){
-            console.log(event);
-            console.info(event.data);
-            peopleLeft(event.data,dateHelper());
-        });
-		chat.addEventListener("receive",function(event){ 
-            console.log(event);
-            receiveMessage(event.data,event.peer,dateHelper(),event.peer);
-        });
-		chat.addEventListener("room",function(event){
-            console.log(event);
-            conversationNameChanged('a'+Math.random(),'b');
-        });
-               
-       console.log('CB ready for '+location.hash.length);
-       Cryptoblog.logging = true;
-            }
-
+           updateOnlineCount(6);
         </script>
            
         <fome-menu></fome-menu>
@@ -306,22 +247,18 @@
         <link rel="import" href="include.html">
         <link rel="import" href="elementile.html">
         
-         <polymer-element name="chat-message" attributes="text writer date userid color" noscript>
+         <polymer-element name="chat-message" attributes="text writer date" noscript>
               <template>
-                  <span>
-                        <span id="imagebox">&nbsp;</span>
-                        <b onclick="activateXRay($(this).attr('class'));" class="UID{{userid}}" id="UID">
-                             {{writer}}</b> 
-                       at <i>{{date}} </i> 
-                        <br>
-                        <div>{{text}}</div>
-                  </span>  
+                    <span id="imagebox">&nbsp;</span>
+                    <b>{{writer}}</b> at <i>{{date}} </i> <br>
+                    <div>{{text}}</div>
+                    
                   <style>
                     #imagebox {
                         display: inline-block;
                         width: 30px;
                         height: 30px;
-                        background: #{{color}};
+                        background: #48F;
                         vertical-align: -5px;
                     }
                       div {
@@ -371,15 +308,7 @@
             <button onclick="peopleLeft(h.value)">left</button>
             <button onclick="peopleArrived(h.value)">arrived</button>
             <button onclick="conversationNameChanged(h.value,'sth_else')">changed</button>
-             <button onclick="updateOnlineCount(h.value);">count</button>
-            <button onclick="scl();">SCL</button>
-            <button onclick="connectT();">connect!</button>
             <input value="name" id=h>
         </div>
-        
-        
-       
-
-        
     </body>
 </html>
