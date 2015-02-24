@@ -20,3 +20,52 @@
               </template>
               
 </polymer-element>
+
+<polymer-element name="app-icon" attributes="color mouse icon href text" noscript>
+           <template>
+                      
+                      <div class="flatcard image e_applist away " style="background:#{{color}};" onclick="fome.jumpTo('{{href}}',this.style.background);">
+                      <core-icon icon="{{icon}}" style="fill:white;" aria-label="shuffle" role="img"></core-icon>
+                      <paper-ripple></paper-ripple>
+                         <template if="{{text}}">
+                            <div>{{text}}</div>
+                          </template>
+                        </div>
+               <style>
+                .flatcard {
+                    display: inline-block;
+                    padding: 10px;
+                    margin: 5px;
+                    box-shadow: 0 1px 1px #444;
+                    background: white;
+                    width: 66px;
+                    height: 66px;
+                }
+                .flatcard core-icon {
+                    width: 54px;
+                    height: 54px;
+                    margin-left: 6px;
+                    margin-top: 6px;
+                    fill: black;
+                }
+                .flatcard paper-ripple {
+                    position: absolute;
+                    margin: -10px;
+                    width: 86px;
+                    height: 86px;
+                    margin-top: -70px;
+                }
+                div {
+
+                    padding-top: 25px;
+                    width: 130px;
+                    margin-left: -10px;
+
+                }
+
+                .away {
+                    margin: 30px;
+                }               
+               </style>
+           </template>
+    </polymer-element>
