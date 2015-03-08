@@ -1,4 +1,4 @@
-polyfome 1.1.0
+polyfome 1.1.2
 ========
 Google's Polymer is a really great API, but for some it might be too complicated, or others may find it too hard to start.
 Polymer For Me (polyfome) is a solution for that. If used with polymer, it links and builds automatically the page.
