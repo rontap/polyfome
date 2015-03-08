@@ -4,13 +4,9 @@ Google's Polymer is a really great API, but for some it might be too complicated
 Polymer For Me (polyfome) is a solution for that. If used with polymer, it links and builds automatically the page.
 example: http://elemential.net/polyfome/test.html
 
-*Note* This version is only for internal elemential use. It does not work like an API yet
-Recent Changes 
-=
+*Note* This version is only for internal elemential use. It does not work like an API yet  
 
-bugfix: Polymer didnt load on http protocol.
-added: p2p chat beta functionality
-added: basic support for packages
+Recent Changes 
 =======
 1.1.2
 extended: chat works w/ cryptoblog, but errors occur
