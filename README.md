@@ -5,7 +5,7 @@ Polymer For Me (polyfome) is a solution for that. If used with polymer, it links
 example: http://elemential.net/polyfome/test.html
 
 *Note* This version is only for internal elemential use. It does not work like an API yet
-Recent Changes in 1.1.0
+Recent Changes 
 =
 
 bugfix: Polymer didnt load on http protocol.
