@@ -12,6 +12,12 @@ bugfix: Polymer didnt load on http protocol.
 added: p2p chat beta functionality
 added: basic support for packages
 =======
+1.1.2
+extended: chat works w/ cryptoblog, but errors occur
+modified: chat split into css and html
+added: app-icon tag
+bugfix: include_minimalist now works w/ http
+
 1.1.1
 added: chat now almost works  
 added: app-icon tag to tag.html  
@@ -19,7 +25,7 @@ bugfix:removed platform.js from include
 fix: loading imgs in shadow DOM  
 
 1.1.0
-bugfix: Polymer didnt load on http protocol.  
+bugfix: Polymer did'nt load on http protocol.  
 added: p2p chat beta functionality  
 added: basic support for packages  
 
